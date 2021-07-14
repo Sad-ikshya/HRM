@@ -16,38 +16,32 @@ import com.finalproject.HRM.repositories.UserRepository;
 
 @Service
 public class CustomOidcUserService extends OidcUserService {
-	 @Autowired
-	    private UserRepository userRepository; 
+	@Autowired
+	private UserRepository userRepository;
 
-	    @Override
-	    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-	        OidcUser oidcUser = super.loadUser(userRequest);
+	@Override
+	public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
+		OidcUser oidcUser = super.loadUser(userRequest);
 
-	        try {
-	             return processOidcUser(userRequest, oidcUser);
-	        } catch (Exception ex) {
-	            throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
-	        }
-	    }
+		try {
+			return processOidcUser(userRequest, oidcUser);
+		} catch (Exception ex) {
+			throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
+		}
+	}
 
-	     private OidcUser processOidcUser(OidcUserRequest userRequest, OidcUser oidcUser) {
-	        GoogleUserInfo googleUserInfo = new GoogleUserInfo(oidcUser.getAttributes());
+	private OidcUser processOidcUser(OidcUserRequest userRequest, OidcUser oidcUser) {
+		GoogleUserInfo googleUserInfo = new GoogleUserInfo(oidcUser.getAttributes());
 
-	        // see what other data from userRequest or oidcUser you need
+		Optional<User> userOptional = userRepository.getByEmail(googleUserInfo.getEmail());
+		if (userOptional.isEmpty()) {
+			User user = new User();
+			user.setEmail(googleUserInfo.getEmail());
+			user.setFirstname(googleUserInfo.getName());
 
-	        Optional<User> userOptional = Optional.of(userRepository.getByEmail(googleUserInfo.getEmail()));
-	        if (!userOptional.isPresent()) {
-	        	System.out.println("Registering user==============================>");
-	            User user = new User();
-	            user.setEmail(googleUserInfo.getEmail());
-	            user.setFirstname(googleUserInfo.getName());
-
-	           // set other needed data
-
-	            userRepository.save(user);
-	        }   
-
-	        return oidcUser;
-	    }
+			userRepository.save(user);
+		}
+		return oidcUser;
+	}
 
 }

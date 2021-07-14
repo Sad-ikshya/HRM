@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -45,12 +46,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//		http.authorizeRequests().antMatchers("/","/login","/oauth/**").permitAll()
-//		.and().oauth2Login().defaultSuccessUrl("/loginSuccess").loginPage("/login").userInfoEndpoint()
-//		.userService(oauthUserService);
-//			
-//			
-		http.authorizeRequests().antMatchers("/custom_login", "/oauth/**").permitAll().and().oauth2Login()
-				.userInfoEndpoint().oidcUserService(customOidcUserService).and().defaultSuccessUrl("/loginSuccess");
+		http.csrf().disable().authorizeRequests().mvcMatchers("/google/login").authenticated().anyRequest().permitAll()
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS).and().oauth2Login()
+				
+				.userInfoEndpoint().oidcUserService(customOidcUserService).and()
+				.successHandler(new AuthenticationSuccessHandler() {
+					@Override
+					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+							org.springframework.security.core.Authentication authentication)
+							throws IOException, ServletException {
+						System.out.println("SUCCESS===========>" + authentication.getName());
+					}
+				}).failureHandler(new AuthenticationFailureHandler() {
+					@Override
+					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+							AuthenticationException exception) throws IOException, ServletException {
+						System.out.println("ERROR===========>" + exception.toString());
+						System.out.println("ERROR===========>" + response.getStatus());
+					}
+				});
 	}
 }
