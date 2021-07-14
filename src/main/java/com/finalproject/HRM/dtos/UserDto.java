@@ -14,10 +14,10 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Builder
 @Getter
 @Setter
+@ToString
+@Builder
 public class UserDto {
 	private String id;
 	private String firstname;
@@ -30,5 +30,4 @@ public class UserDto {
 	private Role role;
 	private String photo;
 	private String provider;
-
 }
