@@ -27,7 +27,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.finalproject.HRM.entities.CustomOAuth2User;
 import com.finalproject.HRM.implementations.CustomOidcUserService;
-import com.finalproject.HRM.implementations.UserService;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
