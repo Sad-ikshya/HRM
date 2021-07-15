@@ -23,8 +23,7 @@ import lombok.ToString;
 public class User {
 	@Id
 	private String id;
-	private String firstname;
-	private String lastname;
+	private String fullName;
 	private String email;
 	private String department;
 	private String designation;
@@ -32,6 +31,6 @@ public class User {
 	private Date joinedDate;
 	private Role role;
 	private String photo;
-	private String provider;
+	
 
 }

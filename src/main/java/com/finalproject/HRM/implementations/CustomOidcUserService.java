@@ -38,7 +38,7 @@ public class CustomOidcUserService extends OidcUserService {
 		if (userOptional.isEmpty()) {
 			User user = new User();
 			user.setEmail(googleUserInfo.getEmail());
-			user.setFirstname(googleUserInfo.getName());
+			user.setFullName(googleUserInfo.getName());
 			
 			user.setRole(Role.EMPLOYEE);
 
