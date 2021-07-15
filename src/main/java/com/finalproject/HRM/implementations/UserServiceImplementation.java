@@ -2,6 +2,7 @@ package com.finalproject.HRM.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,18 +60,22 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public UserDto getUserByEmail(String email) {
-		User user=userRepository.getByEmail(email);
-		return UserDto.builder().id(user.getId())
-				.firstname(user.getFirstname())
-				.lastname(user.getLastname())
-				.email(user.getEmail())
-				.department(user.getDepartment())
-				.designation(user.getDesignation())
-				.bio(user.getBio())
-				.joinedDate(user.getJoinedDate())
-				.role(user.getRole())
-				.photo(user.getPhoto())
-				.provider(user.getProvider()).build();
+		Optional<User> user=userRepository.getByEmail(email);
+		if(user.isPresent()) {
+			
+		return UserDto.builder().id(user.get().getId())
+				.firstname(user.get().getFirstname())
+				.lastname(user.get().getLastname())
+				.email(user.get().getEmail())
+				.department(user.get().getDepartment())
+				.designation(user.get().getDesignation())
+				.bio(user.get().getBio())
+				.joinedDate(user.get().getJoinedDate())
+				.role(user.get().getRole())
+				.photo(user.get().getPhoto())
+				.provider(user.get().getProvider()).build();
+		}
+		return null;
 	}
 
 	@Override

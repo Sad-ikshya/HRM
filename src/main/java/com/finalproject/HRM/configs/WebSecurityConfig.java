@@ -26,18 +26,11 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.finalproject.HRM.entities.CustomOAuth2User;
-import com.finalproject.HRM.implementations.CustomOAuth2UserService;
 import com.finalproject.HRM.implementations.CustomOidcUserService;
 import com.finalproject.HRM.implementations.UserService;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private CustomOAuth2UserService oauthUserService;
-
-	@Autowired
-	private UserService userService;
-
 	@Autowired
 	private OAuth2LoginSucessHandler oAuth2LoginSuccessHandler;
 

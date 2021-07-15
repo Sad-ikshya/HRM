@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.HRM.dtos.GoogleUserInfo;
+import com.finalproject.HRM.entities.Role;
 import com.finalproject.HRM.entities.User;
 import com.finalproject.HRM.repositories.UserRepository;
 
@@ -38,6 +39,8 @@ public class CustomOidcUserService extends OidcUserService {
 			User user = new User();
 			user.setEmail(googleUserInfo.getEmail());
 			user.setFirstname(googleUserInfo.getName());
+			
+			user.setRole(Role.EMPLOYEE);
 
 			userRepository.save(user);
 		}
