@@ -3,6 +3,7 @@ package com.finalproject.HRM.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,5 +58,11 @@ public class UserController {
 	public UserDto getUserById(@PathVariable String id)
 	{
 		return userService.getUserById(id);
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteUser(@PathVariable String id)
+	{
+		return userService.deleteUserById(id);
 	}
 }

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.HRM.dtos.UserDto;
+import com.finalproject.HRM.entities.DeletedUser;
 import com.finalproject.HRM.entities.User;
+import com.finalproject.HRM.repositories.DeletedUserRepository;
 import com.finalproject.HRM.repositories.UserRepository;
 import com.finalproject.HRM.service.UserService;
 import com.finalproject.HRM.utils.FileUploadHelper;
@@ -23,6 +25,9 @@ import com.finalproject.HRM.utils.FileUploadHelper;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	DeletedUserRepository deletedUserRepo;
 	
 	@Autowired
 	FileUploadHelper filerHelper;
@@ -171,6 +176,26 @@ public class UserServiceImpl implements UserService {
 		
 	
 		return filerHelper.upload(image);
+	}
+	
+	@Override
+	public String deleteUserById(String id)
+	{
+		User user=userRepository.findById(id)
+				.orElseThrow(()->new IllegalStateException("User not Found"));
+		DeletedUser deletedUserEntity = DeletedUser.builder().id(user.getId())
+													.fullName(user.getFullName())
+													.email(user.getEmail())
+													.department(user.getDepartment())
+													.designation(user.getDesignation())
+													.bio(user.getBio())
+													.joinedDate(user.getJoinedDate())
+													.role(user.getRole())
+													.photo(user.getPhoto())
+													.build();
+		deletedUserRepo.save(deletedUserEntity);
+		userRepository.deleteById(id);
+		return "User with id : "+id+" is deleted successfully";
 	}
 }
 

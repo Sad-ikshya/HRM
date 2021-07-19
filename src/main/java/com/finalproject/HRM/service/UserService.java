@@ -14,4 +14,5 @@ public interface UserService {
 	public UserDto updateUser(String id, UserDto user);
 	public String uploadImage(MultipartFile image) throws Exception;
 	public UserDto getUserById(String id);
+	public String deleteUserById(String id);
 }
