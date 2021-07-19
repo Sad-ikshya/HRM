@@ -2,7 +2,6 @@ package com.finalproject.HRM.dtos;
 
 import java.util.Date;
 
-
 import com.finalproject.HRM.entities.Role;
 
 import lombok.AllArgsConstructor;
@@ -28,5 +27,5 @@ public class UserDto {
 	private Date joinedDate;
 	private Role role;
 	private String photo;
-	
+
 }

@@ -24,8 +24,7 @@ public class LeaveRequestController {
 	private LeaveRequestService leaveRequestService;
 
 	@GetMapping()
-	public ResponseEntity<Page<LeaveRequestDto>> getAllLeaveRequest(
-			@RequestParam(defaultValue = "0") int index,
+	public ResponseEntity<Page<LeaveRequestDto>> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
 		return new ResponseEntity<Page<LeaveRequestDto>>(leaveRequestService.getAllLeaveRequests(index, size),
 				HttpStatus.OK);
@@ -45,8 +44,8 @@ public class LeaveRequestController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<HttpStatus> deleteLeaveRequest(@PathVariable String id) {
-		leaveRequestService.deleteLeaveRequest(id);
-		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+	public ResponseEntity<String> deleteLeaveRequest(@PathVariable String id) {
+
+		return new ResponseEntity<String>(leaveRequestService.deleteLeaveRequest(id), HttpStatus.OK);
 	}
 }

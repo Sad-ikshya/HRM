@@ -16,9 +16,9 @@ import com.finalproject.HRM.services.LeaveService;
 public class LeaveController {
 	@Autowired
 	private LeaveService leaveService;
-	
+
 	@PostMapping()
-	public ResponseEntity<LeaveDto> saveLeave(@RequestBody LeaveDto leave){
+	public ResponseEntity<LeaveDto> saveLeave(@RequestBody LeaveDto leave) {
 		return new ResponseEntity<LeaveDto>(leaveService.saveLeave(leave), HttpStatus.CREATED);
 	}
 

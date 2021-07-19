@@ -2,6 +2,10 @@ package com.finalproject.HRM.entities;
 
 import java.util.Date;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,14 +26,18 @@ import lombok.ToString;
 public class LeaveRequest {
 	@Id
 	private String id;
+	@FutureOrPresent
 	private Date fromDate;
+	@FutureOrPresent
 	private Date toDate;
+	@NotBlank(message = "Leave reason should not be blank")
+	@Size(min = 20, max = 80)
 	private String leaveReason;
+	@NotBlank(message = "Leave id can not be blank")
 	private Leave leave;
 	private LeaveType leaveType;
 	private Status status;
+	@NotBlank(message = "Employee id cannot be blank")
 	private User employee;
-	
-	
 
 }
