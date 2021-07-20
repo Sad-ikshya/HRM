@@ -28,5 +28,5 @@ public class UserDto {
 	private Date joinedDate;
 	private Role role;
 	private String photo;
-	
+
 }
