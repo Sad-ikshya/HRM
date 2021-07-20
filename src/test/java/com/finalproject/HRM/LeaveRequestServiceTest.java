@@ -17,11 +17,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.finalproject.HRM.dtos.LeaveDto;
-import com.finalproject.HRM.dtos.LeaveRequestDto;
 import com.finalproject.HRM.dtos.UserDto;
-import com.finalproject.HRM.entities.LeaveType;
-import com.finalproject.HRM.services.LeaveRequestService;
+import com.finalproject.HRM.web.leave.dtos.LeaveDto;
+import com.finalproject.HRM.web.leave.dtos.LeaveRequestDto;
+import com.finalproject.HRM.web.leave.entities.LeaveType;
+import com.finalproject.HRM.web.leave.services.LeaveRequestService;
 
 public class LeaveRequestServiceTest {
 	@Mock
