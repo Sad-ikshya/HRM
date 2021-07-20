@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	DeletedUserRepository deletedUserRepo;
 	
 	@Autowired
-	FileUploadHelper filerHelper;
+	FileUploadHelper fileHelper;
 
 	private Date today = new Date();
 	
@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	
-		return filerHelper.upload(image);
+		return fileHelper.upload(image);
 	}
 	
 	@Override
