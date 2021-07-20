@@ -10,13 +10,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.finalproject.HRM.dtos.UserDto;
-import com.finalproject.HRM.entities.User;
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
 import com.finalproject.HRM.web.leave.dtos.LeaveRequestDto;
 import com.finalproject.HRM.web.leave.entities.Leave;
 import com.finalproject.HRM.web.leave.entities.LeaveRequest;
 import com.finalproject.HRM.web.leave.repositories.LeaveRequestRepository;
+import com.finalproject.HRM.web.user.dtos.UserDto;
+import com.finalproject.HRM.web.user.entities.User;
 
 @Service
 public class LeaveRequestServiceImplementation implements LeaveRequestService {
