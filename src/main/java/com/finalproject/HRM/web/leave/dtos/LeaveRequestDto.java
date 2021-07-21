@@ -1,7 +1,6 @@
 package com.finalproject.HRM.web.leave.dtos;
 
 import java.util.Date;
-
 import com.finalproject.HRM.web.leave.entities.LeaveType;
 import com.finalproject.HRM.web.leave.entities.Status;
 import com.finalproject.HRM.web.user.dtos.UserDto;

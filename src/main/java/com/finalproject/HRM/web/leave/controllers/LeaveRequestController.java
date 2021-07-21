@@ -1,5 +1,11 @@
 package com.finalproject.HRM.web.leave.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,7 +24,7 @@ import com.finalproject.HRM.web.leave.dtos.LeaveRequestDto;
 import com.finalproject.HRM.web.leave.services.LeaveRequestService;
 
 @RestController
-@RequestMapping("/leaveRequests")
+@RequestMapping("/leave-requests")
 public class LeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
@@ -47,5 +53,21 @@ public class LeaveRequestController {
 	public ResponseEntity<String> deleteLeaveRequest(@PathVariable String id) {
 
 		return new ResponseEntity<String>(leaveRequestService.deleteLeaveRequest(id), HttpStatus.OK);
+	}
+
+	@GetMapping("/by-employee-id/{employee-id}")
+	public ResponseEntity<List<LeaveRequestDto>> leaveDetailByEmployeeid(@PathVariable String employeeId) {
+		return new ResponseEntity<List<LeaveRequestDto>>(leaveRequestService.leaveDetailByEmployeeId(employeeId),
+				HttpStatus.FOUND);
+	}
+
+	@GetMapping("/by-date/{date}")
+	public ResponseEntity<Page<LeaveRequestDto>> leaveDetailByDate(@PathVariable String date,
+			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd", Locale.ENGLISH);
+		formatter.setTimeZone(TimeZone.getTimeZone("Kathmandu/Nepal"));
+		System.out.println("Date=====================>"+formatter.parse(date));
+		return new ResponseEntity<Page<LeaveRequestDto>>(
+				leaveRequestService.leaveDetailByDate(formatter.parse(date), index, size), HttpStatus.OK);
 	}
 }
