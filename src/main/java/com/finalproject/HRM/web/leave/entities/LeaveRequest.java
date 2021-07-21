@@ -39,6 +39,6 @@ public class LeaveRequest {
 	private LeaveType leaveType;
 	private Status status;
 	@NotBlank(message = "Employee id cannot be blank")
-	private User employee;
+	private String employeeId;
 
 }
