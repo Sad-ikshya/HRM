@@ -31,6 +31,10 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.12.RELEASE'
 	testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '3.0.0'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+	
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	
 	
 }
