@@ -1,7 +1,6 @@
 package com.finalproject.HRM.web.holiday.services;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,8 @@ public class HolidayServiceImpl implements HolidayService{
 		for(Holiday holiday:holidayList)
 		{
 			HolidayDto holidayDto = HolidayDto.builder().id(holiday.getId())
-													.occasion(holiday.getOccasion())
-													.fromDate(holiday.getFromDate())
-													.toDate(holiday.getToDate())
+													.description(holiday.getDescription())
+													.date(holiday.getDate())
 													.build();
 			holidayDtoList.add(holidayDto);
 		}
@@ -45,9 +43,8 @@ public class HolidayServiceImpl implements HolidayService{
 							.orElseThrow(()->new IllegalStateException("Holiday data with id :"+id+" not found"));
 		
 		HolidayDto holidayDto = HolidayDto.builder().id(holiday.getId())
-												.occasion(holiday.getOccasion())
-												.fromDate(holiday.getFromDate())
-												.toDate(holiday.getToDate())
+												.description(holiday.getDescription())
+												.date(holiday.getDate())
 												.build();
 		return holidayDto;
 	}
@@ -55,9 +52,8 @@ public class HolidayServiceImpl implements HolidayService{
 	@Override
 	public HolidayDto addHoliday(HolidayDto holiday) {
 		Holiday holidayEntity = Holiday.builder()
-										.occasion(holiday.getOccasion())
-										.fromDate(holiday.getFromDate())
-										.toDate(holiday.getToDate())
+										.description(holiday.getDescription())
+										.date(holiday.getDate())
 										.build();
 		
 		holidayRepo.insert(holidayEntity);
@@ -72,10 +68,9 @@ public class HolidayServiceImpl implements HolidayService{
 				.orElseThrow(()->new IllegalStateException("Holiday data with id :"+id+" not found"));
 		
 		holidayEntity = Holiday.builder().id(id)
-								.occasion(holiday.getOccasion())
-								.fromDate(holiday.getFromDate())
-								.toDate(holiday.getToDate())
-								.build();
+										.description(holiday.getDescription())
+										.date(holiday.getDate())
+										.build();
 
 		holidayRepo.save(holidayEntity);
 		return holiday;
@@ -88,10 +83,9 @@ public class HolidayServiceImpl implements HolidayService{
 		
 		//save deleted holiday data into deleted_holiday collection
 		DeletedHoliday deletedHoliday = DeletedHoliday.builder().id(id)
-								.occasion(holiday.getOccasion())
-								.fromDate(holiday.getFromDate())
-								.toDate(holiday.getToDate())
-								.build();
+													.description(holiday.getDescription())
+													.date(holiday.getDate())
+													.build();
 
 		deletedHolidayRepo.save(deletedHoliday);
 		

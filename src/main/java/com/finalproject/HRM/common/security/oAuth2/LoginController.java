@@ -20,7 +20,7 @@ public class LoginController {
 		return "login.html";
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/home")
 	public String home() {
 		return "home.html";
 	}

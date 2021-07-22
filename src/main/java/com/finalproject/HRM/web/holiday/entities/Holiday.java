@@ -23,7 +23,6 @@ import lombok.ToString;
 public class Holiday {
 	@Id
 	private String id;
-	private String occasion;
-	private Date fromDate;
-	private Date toDate;
+	private String description;
+	private Date date;
 }
