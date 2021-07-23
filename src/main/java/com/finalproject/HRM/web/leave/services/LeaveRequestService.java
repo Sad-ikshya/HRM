@@ -20,5 +20,6 @@ public interface LeaveRequestService {
 	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId);
 	
 	public Page<LeaveRequestResponse> leaveDetailByDate(Date date,int index, int size);
+	
 
 }

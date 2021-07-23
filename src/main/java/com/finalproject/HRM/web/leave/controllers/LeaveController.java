@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
+import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceDto;
+import com.finalproject.HRM.web.leave.responseDtos.LeaveSummaryDto;
 import com.finalproject.HRM.web.leave.services.LeaveService;
 
 @RestController
@@ -46,5 +48,13 @@ public class LeaveController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteLeave(@PathVariable String id) {
 		return new ResponseEntity<String>(leaveService.deleteLeave(id), HttpStatus.OK);
+	}
+	@GetMapping("/leave-summary/{employeeId}")
+	public ResponseEntity<List<LeaveSummaryDto>> getLeaveSummary(@PathVariable String employeeId){
+		return new ResponseEntity<List<LeaveSummaryDto>>(leaveService.getLeaveSummary(employeeId), HttpStatus.OK);
+	}
+	@GetMapping("/leave-balance/{employeeId}")
+	public ResponseEntity<List<LeaveBalanceDto>> getLeaveBalance(@PathVariable String employeeId){
+		return new ResponseEntity<List<LeaveBalanceDto>>(leaveService.getLeaveBalance(employeeId), HttpStatus.OK);
 	}
 }

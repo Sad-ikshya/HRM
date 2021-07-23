@@ -56,13 +56,13 @@ public class LeaveRequestController {
 		return new ResponseEntity<String>(leaveRequestService.deleteLeaveRequest(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/by-employee-id/{employeeId}")
+	@GetMapping("/employee-id/{employeeId}")
 	public ResponseEntity<List<LeaveRequestResponse>> leaveDetailByEmployeeid(@PathVariable String employeeId) {
 		return new ResponseEntity<List<LeaveRequestResponse>>(leaveRequestService.leaveDetailByEmployeeId(employeeId),
 				HttpStatus.FOUND);
 	}
 
-	@GetMapping("/by-date/{date}")
+	@GetMapping("/date/{date}")
 	public ResponseEntity<Page<LeaveRequestResponse>> leaveDetailByDate(@PathVariable String date,
 			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd", Locale.ENGLISH);
