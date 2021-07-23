@@ -1,7 +1,5 @@
 package com.finalproject.HRM.common.security.oAuth2;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
@@ -10,14 +8,14 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
+import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.Role;
-import com.finalproject.HRM.web.user.entities.User;
-import com.finalproject.HRM.web.user.repositories.UserRepository;
+import com.finalproject.HRM.web.user.service.UserService;
 
 @Service
 public class CustomOidcUserService extends OidcUserService {
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@Override
 	public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
@@ -33,16 +31,13 @@ public class CustomOidcUserService extends OidcUserService {
 	private OidcUser processOidcUser(OidcUserRequest userRequest, OidcUser oidcUser) {
 		GoogleUserInfo googleUserInfo = new GoogleUserInfo(oidcUser.getAttributes());
 
-		Optional<User> userOptional = userRepository.getByEmail(googleUserInfo.getEmail());
-		if (userOptional.isEmpty()) {
-			User user = new User();
-			user.setEmail(googleUserInfo.getEmail());
-			user.setFullName(googleUserInfo.getName());
-			
-			user.setRole(Role.EMPLOYEE);
-
-			userRepository.save(user);
-		}
+		UserDto userDto = UserDto.builder()
+							.fullName(googleUserInfo.getName())
+							.email(googleUserInfo.getEmail())
+							.role(Role.EMPLOYEE)
+							.photo(googleUserInfo.getPicture())
+							.build();
+		userService.saveUser(userDto);
 		return oidcUser;
 	}
 
