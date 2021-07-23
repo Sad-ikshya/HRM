@@ -20,7 +20,7 @@ public class LoginController {
 		return "login.html";
 	}
 
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String home() {
 		return "home.html";
 	}
@@ -32,6 +32,7 @@ public class LoginController {
 		System.out.println("LOGIN is successful==============");
 		return "test.html";
 	}
+
 	@GetMapping("/loginFailure")
 	public String failureLogin(Model model, OAuth2AuthenticationToken authentication) {
 		OAuth2AuthorizedClient client = authorizedClientService
