@@ -20,13 +20,14 @@ public class FileUploadHelper {
 	public String upload(MultipartFile file) throws Exception
 	{
 		String path = LOCATION+file.getOriginalFilename();
+//		String path = LOCATION.concat(file.getOriginalFilename());
 		try(InputStream inputStream = file.getInputStream())
 		{
 			Files.copy(inputStream, Paths.get(path),
 					StandardCopyOption.REPLACE_EXISTING);
 		}
 		catch (Exception e) {
-			throw new Exception("fail to upload file",e);
+			throw new Exception("fail to upload file "+e);
 		}
 		return path;
 	}

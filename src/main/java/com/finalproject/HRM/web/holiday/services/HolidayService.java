@@ -10,4 +10,5 @@ public interface HolidayService {
 	public HolidayDto addHoliday(HolidayDto holiday);
 	public HolidayDto updateHoliday(String id,HolidayDto holiday);
 	public String deleteHoliday(String id);
+	public List<HolidayDto> getUpcomingHoliday();
 }

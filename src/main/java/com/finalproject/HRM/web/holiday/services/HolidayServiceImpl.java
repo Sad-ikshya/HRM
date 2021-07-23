@@ -1,6 +1,7 @@
 package com.finalproject.HRM.web.holiday.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,23 @@ public class HolidayServiceImpl implements HolidayService{
 		holidayRepo.deleteById(id);
 		
 		return "Holiday with id:"+id+" deleted successfully";
+	}
+
+	@Override
+	public List<HolidayDto> getUpcomingHoliday() {
+		Date today = new Date();
+		List<Holiday> holidayList = holidayRepo.findByDateGreaterThan(today);
+		List<HolidayDto> holidayDtoList = new ArrayList<>();
+		
+		for(Holiday holiday:holidayList)
+		{
+			HolidayDto holidayDto = HolidayDto.builder().id(holiday.getId())
+													.description(holiday.getDescription())
+													.date(holiday.getDate())
+													.build();
+			holidayDtoList.add(holidayDto);
+		}
+		return holidayDtoList;
 	}
 
 }

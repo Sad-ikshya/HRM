@@ -51,4 +51,10 @@ public class HolidayController {
 	{
 		return holidayService.deleteHoliday(id);
 	}
+	
+	@GetMapping("/upcoming")
+	public List<HolidayDto> getUpcomingHoliday()
+	{
+		return holidayService.getUpcomingHoliday();
+	}
 }
