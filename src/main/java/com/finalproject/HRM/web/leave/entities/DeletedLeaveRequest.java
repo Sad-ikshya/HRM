@@ -1,10 +1,11 @@
-package com.finalproject.HRM.web.leave.dtos;
+package com.finalproject.HRM.web.leave.entities;
 
 import java.util.Date;
 
-import com.finalproject.HRM.web.leave.entities.LeaveType;
-import com.finalproject.HRM.web.leave.entities.Status;
-import com.finalproject.HRM.web.user.dtos.UserDto;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.finalproject.HRM.web.user.entities.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,18 +16,20 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Document(collection = "deletedLeaveRequests")
 @ToString
 @Builder
 @Getter
 @Setter
-public class LeaveRequestDto {
+public class DeletedLeaveRequest {
+	@Id
 	private String id;
 	private Date fromDate;
 	private Date toDate;
 	private String leaveReason;
-	private LeaveDto leave;
+	private String leaveId;
 	private LeaveType leaveType;
 	private Status status;
-	private UserDto employee;
+	private User employee;
 
 }

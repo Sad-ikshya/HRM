@@ -1,7 +1,6 @@
 package com.finalproject.HRM.web.leave.entities;
 
 import java.util.Date;
-
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -36,10 +35,10 @@ public class LeaveRequest {
 	@Size(min = 20, max = 80)
 	private String leaveReason;
 	@NotBlank(message = "Leave id can not be blank")
-	private Leave leave;
+	private String leaveId;
 	private LeaveType leaveType;
 	private Status status;
 	@NotBlank(message = "Employee id cannot be blank")
-	private User employee;
+	private String employeeId;
 
 }

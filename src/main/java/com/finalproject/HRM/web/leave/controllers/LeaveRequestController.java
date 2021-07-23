@@ -1,5 +1,11 @@
 package com.finalproject.HRM.web.leave.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,32 +20,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.finalproject.HRM.web.leave.dtos.LeaveRequestDto;
+import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
+import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;
 import com.finalproject.HRM.web.leave.services.LeaveRequestService;
 
 @RestController
-@RequestMapping("/leaveRequests")
+@RequestMapping("/leave-requests")
 public class LeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
 
 	@GetMapping()
-	public ResponseEntity<Page<LeaveRequestDto>> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
+	public ResponseEntity<Page<LeaveRequestResponse>> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
-		return new ResponseEntity<Page<LeaveRequestDto>>(leaveRequestService.getAllLeaveRequests(index, size),
+		return new ResponseEntity<Page<LeaveRequestResponse>>(leaveRequestService.getAllLeaveRequests(index, size),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<LeaveRequestDto> saveLeaveRequest(@RequestBody LeaveRequestDto leaveRequest) {
-		return new ResponseEntity<LeaveRequestDto>(leaveRequestService.saveLeaveRequest(leaveRequest),
+	public ResponseEntity<LeaveRequestResponse> saveLeaveRequest(@RequestBody LeaveRequestDto leaveRequest) {
+		return new ResponseEntity<LeaveRequestResponse>(leaveRequestService.saveLeaveRequest(leaveRequest),
 				HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<LeaveRequestDto> updateLeaveRequest(@PathVariable String id,
+	public ResponseEntity<LeaveRequestResponse> updateLeaveRequest(@PathVariable String id,
 			@RequestBody LeaveRequestDto leaveRequest) {
-		return new ResponseEntity<LeaveRequestDto>(leaveRequestService.updateLeaveRequestDto(id, leaveRequest),
+		return new ResponseEntity<LeaveRequestResponse>(leaveRequestService.updateLeaveRequestDto(id, leaveRequest),
 				HttpStatus.OK);
 	}
 
@@ -47,5 +54,21 @@ public class LeaveRequestController {
 	public ResponseEntity<String> deleteLeaveRequest(@PathVariable String id) {
 
 		return new ResponseEntity<String>(leaveRequestService.deleteLeaveRequest(id), HttpStatus.OK);
+	}
+
+	@GetMapping("/employee-id/{employeeId}")
+	public ResponseEntity<List<LeaveRequestResponse>> leaveDetailByEmployeeid(@PathVariable String employeeId) {
+		return new ResponseEntity<List<LeaveRequestResponse>>(leaveRequestService.leaveDetailByEmployeeId(employeeId),
+				HttpStatus.FOUND);
+	}
+
+	@GetMapping("/date/{date}")
+	public ResponseEntity<Page<LeaveRequestResponse>> leaveDetailByDate(@PathVariable String date,
+			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd", Locale.ENGLISH);
+		formatter.setTimeZone(TimeZone.getTimeZone("Kathmandu/Nepal"));
+		System.out.println("Date=====================>"+formatter.parse(date));
+		return new ResponseEntity<Page<LeaveRequestResponse>>(
+				leaveRequestService.leaveDetailByDate(formatter.parse(date), index, size), HttpStatus.OK);
 	}
 }

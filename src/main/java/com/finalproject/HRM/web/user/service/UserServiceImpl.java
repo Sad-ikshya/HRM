@@ -94,7 +94,8 @@ public class UserServiceImpl implements UserService {
 							.photo(user.getPhoto())
 							.build();
 			
-			userRepository.insert(userEntity);
+		userRepository.insert(userEntity);
+			
 		}
 		
 		return user;
