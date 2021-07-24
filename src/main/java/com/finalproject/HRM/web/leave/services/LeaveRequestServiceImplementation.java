@@ -19,6 +19,7 @@ import com.finalproject.HRM.web.leave.entities.LeaveRequest;
 import com.finalproject.HRM.web.leave.repositories.LeaveRepository;
 import com.finalproject.HRM.web.leave.repositories.LeaveRequestRepository;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
+import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestStatusDto;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.User;
@@ -157,5 +158,21 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 				leaveRequests.size());
 
 		return leaveRequestDtoPage;
+	}
+
+	@Override
+	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus) {
+		LeaveRequest leaveRequestEntity = leaveRequestRepository.findById(leaveRequestId).get();
+		UserDto user = userService.getUserById(leaveRequestEntity.getEmployeeId());
+		LeaveDto leaveDto = leaveService.getLeaveById(leaveRequestEntity.getLeaveId());
+		
+		leaveRequestEntity.setStatus(leaveRequestStatus.getStatus());
+
+		leaveRequestEntity = leaveRequestRepository.save(leaveRequestEntity);
+
+		return LeaveRequestResponse.builder().id(leaveRequestEntity.getId()).fromDate(leaveRequestEntity.getFromDate())
+				.toDate(leaveRequestEntity.getToDate()).leaveReason(leaveRequestEntity.getLeaveReason()).leave(leaveDto)
+				.leaveType(leaveRequestEntity.getLeaveType()).status(leaveRequestEntity.getStatus()).employee(user).build();
+	
 	}
 }

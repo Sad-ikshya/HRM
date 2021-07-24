@@ -20,7 +20,7 @@ import com.finalproject.HRM.web.leave.responseDtos.LeaveSummaryDto;
 import com.finalproject.HRM.web.leave.services.LeaveService;
 
 @RestController
-@RequestMapping("/leaves")
+@RequestMapping("/admin/leaves")
 public class LeaveController {
 	@Autowired
 	private LeaveService leaveService;

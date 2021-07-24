@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
+import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestStatusDto;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;
 
 public interface LeaveRequestService {
@@ -20,6 +21,8 @@ public interface LeaveRequestService {
 	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId);
 	
 	public Page<LeaveRequestResponse> leaveDetailByDate(Date date,int index, int size);
+	
+	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus );
 	
 
 }
