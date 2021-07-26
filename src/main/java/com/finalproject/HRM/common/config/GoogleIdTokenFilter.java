@@ -1,6 +1,11 @@
 package com.finalproject.HRM.common.config;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,6 +19,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.apache.v2.ApacheHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.JsonGenerator;
+import com.google.api.client.json.JsonParser;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,10 +39,47 @@ public class GoogleIdTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		String idTokenString = null;
 		
-		HttpTransport httpTransport= new HttpTransport();
-		JsonFactory
+		HttpTransport httpTransport= new ApacheHttpTransport();
+		JsonFactory json=new JsonFactory() {
+			
+			@Override
+			public JsonParser createJsonParser(InputStream in, Charset charset) throws IOException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public JsonParser createJsonParser(Reader reader) throws IOException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public JsonParser createJsonParser(String value) throws IOException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public JsonParser createJsonParser(InputStream in) throws IOException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public JsonGenerator createJsonGenerator(OutputStream out, Charset enc) throws IOException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public JsonGenerator createJsonGenerator(Writer writer) throws IOException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		}();
 
-		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder( )
+		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(httpTransport,json)
 				// Specify the CLIENT_ID of the app that accesses the backend:
 				.setAudience(Collections.singletonList("ABC"))
 				// Or, if multiple clients access the backend:

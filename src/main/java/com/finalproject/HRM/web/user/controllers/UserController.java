@@ -30,18 +30,6 @@ public class UserController {
 		return userService.saveUser(user);
 	}
 	
-	@GetMapping
-	public List<UserDto> getUserList(
-						@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
-						@RequestParam(name = "limit", defaultValue = "2") int limit,
-						@RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
-						@RequestParam(name = "department", required = false) String department,
-						@RequestParam(name = "designation", required = false) String designation
-			)
-	{
-		return userService.getAllUser(pageNo,limit,sortBy,department, designation);
-	}
-	
 	@PutMapping("/{id}")
 	public UserDto updateUser(@PathVariable String id,@RequestBody UserDto user)
 	{
