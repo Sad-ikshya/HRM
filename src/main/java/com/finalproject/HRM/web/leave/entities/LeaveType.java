@@ -1,6 +1,6 @@
 package com.finalproject.HRM.web.leave.entities;
 
 public enum LeaveType {
-	FULL, HALF
+	FULL, FIRST_HALF,SECOND_HALF
 
 }
