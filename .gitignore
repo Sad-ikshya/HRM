@@ -18,6 +18,7 @@
 .settings
 .springBeans
 .vscode
+.gradle
 /code
 MANIFEST.MF
 _site/
