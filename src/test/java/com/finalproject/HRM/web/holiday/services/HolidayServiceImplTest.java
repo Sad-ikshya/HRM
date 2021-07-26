@@ -37,9 +37,11 @@ public class HolidayServiceImplTest {
 	@Mock
 	private DeletedHolidayRepository deletedHolidayRepo;
 	
+	private Date today;
+	
 	@Before
 	public void setup() {
-	  
+	  today = new Date();
 	}
 	
 	@Test
@@ -65,6 +67,23 @@ public class HolidayServiceImplTest {
 		
 		List<HolidayDto> result = holidayServiceImpl.getAllHoliday();
 		assertEquals(3, result.size());
+	}
+	
+	@Test
+	public void testUpcomingHoliday()
+	{
+		List<Holiday> holidayList = new ArrayList<>();
+		holidayList.add(new Holiday("1", "gai jatra",new Date(2021 - 12 - 15)));
+		holidayList.add(new Holiday("2", "jatra",new Date(2021 - 12 - 10)));
+		holidayList.add(new Holiday("3", "tihar",new Date(2021 - 5 - 5)));
+		
+		List<Holiday> upcomingHolidayList = new ArrayList<>();
+		holidayList.add(new Holiday("1", "gai jatra",new Date(2021 - 12 - 15)));
+		holidayList.add(new Holiday("2", "jatra",new Date(2021 - 12 - 10)));	
+		when(holidayRepo.findByDateGreaterThan(new Date(2021 - 10 - 15))).thenReturn(upcomingHolidayList);
+		
+		List<HolidayDto> result = holidayServiceImpl.getUpcomingHoliday();
+		assertEquals(2, result.size());
 	}
 	
 	@Test
