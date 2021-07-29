@@ -50,7 +50,7 @@ test {
 jar {  
     manifest {  
         attributes(  
-			'Main-Class': 'src.main.java.com.finalproject.HRM'
+			'Main-Class': 'src.main.java.com.finalproject.HRM.HrmApplication'
         )  
     }  
 }  
