@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'application'
 }
 
 group = 'com.finalproject'
@@ -13,6 +14,8 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
+
+mainClassName = 'src.main.java.com.finalproject.HRM.HrmApplication'
 
 repositories {
 	mavenCentral()
@@ -48,6 +51,7 @@ test {
 }
 
 jar {  
+	archiveBaseName = 'hrm'
     manifest {  
         attributes(  
 			'Main-Class': 'src.main.java.com.finalproject.HRM.HrmApplication'
