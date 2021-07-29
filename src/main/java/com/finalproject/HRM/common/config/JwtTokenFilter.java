@@ -1,17 +1,16 @@
 package com.finalproject.HRM.common.config;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,11 +35,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private UserRepository userRepo;
-	private final String CLIENT_ID = "600983764412-dajf8h2223u08i33rb8vekuid5h7lja9.apps.googleusercontent.com";
+	@Value( "${spring.security.oauth2.client.registration.google.client-id}" )
+	private String CLIENT_ID;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
-
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
 				// Specify the CLIENT_ID of the app that accesses the backend:
 				.setAudience(Collections.singletonList(CLIENT_ID))
