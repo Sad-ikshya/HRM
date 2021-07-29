@@ -2,6 +2,8 @@ package com.finalproject.HRM.web.holiday.entities;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,6 +25,8 @@ import lombok.ToString;
 public class DeletedHoliday {
 	@Id
 	private String id;
+	@NotBlank(message = "description can not be blank")
 	private String description;
+	@NotBlank(message = "date can not be blank")
 	private Date date;
 }
