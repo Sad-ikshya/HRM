@@ -12,14 +12,12 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GoogleAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
-	private static final long serialVersionUID = 1L;
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
+	private static final long serialVersionUID = -7858869558953243875L;
 
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException {
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Unauthorized");
-		
+	public void commence(HttpServletRequest hsr, HttpServletResponse response,
+			org.springframework.security.core.AuthenticationException ae) throws IOException, ServletException {
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
 	}
-
 }
