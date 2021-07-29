@@ -67,7 +67,7 @@ public class LeaveRequestController {
 			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getTimeZone("Kathmandu/Nepal"));
-		System.out.println("Date=====================>"+formatter.parse(date));
+		
 		return new ResponseEntity<Page<LeaveRequestResponse>>(
 				leaveRequestService.leaveDetailByDate(formatter.parse(date), index, size), HttpStatus.OK);
 	}
