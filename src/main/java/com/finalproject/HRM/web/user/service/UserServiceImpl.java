@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto saveUser(UserDto user) {
 		//User userEntity=userRepository.getByEmail(user.getEmail()).get();
-		Optional<User> userOptional = userRepository.getByEmail(user.getEmail());
+		Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
 		if(userOptional.isEmpty())
 		{
 			User userEntity=User.builder()
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUserByEmail(String email) {
-		User user=userRepository.getByEmail(email)
+		User user=userRepository.findByEmail(email)
 				.orElseThrow(()->new IllegalStateException("User not Found"));
 			
 		UserDto userDto= UserDto.builder().id(user.getId())

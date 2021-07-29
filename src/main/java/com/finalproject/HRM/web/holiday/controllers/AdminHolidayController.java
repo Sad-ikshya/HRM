@@ -1,5 +1,7 @@
 package com.finalproject.HRM.web.holiday.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,13 @@ public class AdminHolidayController {
 
 	@Autowired
 	HolidayService holidayService;
+	
+	@GetMapping
+	public HolidayDto dummyGetHoliday()
+	{
+		HolidayDto resp = new HolidayDto("dummy", "dummy", new Date());
+		return resp;
+	}
 	
 	@GetMapping("/{id}")
 	public HolidayDto getHolidayByID(@PathVariable String id)

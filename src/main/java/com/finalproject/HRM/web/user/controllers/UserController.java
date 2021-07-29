@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.user.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,8 +47,8 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteUser(@PathVariable String id)
+	public void deleteUser(@PathVariable String id)
 	{
-		return userService.deleteUserById(id);
+		userService.deleteUserById(id);
 	}
 }

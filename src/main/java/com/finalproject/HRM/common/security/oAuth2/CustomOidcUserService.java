@@ -12,7 +12,7 @@ import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.Role;
 import com.finalproject.HRM.web.user.service.UserService;
 
-@Service
+//@Service
 public class CustomOidcUserService extends OidcUserService {
 	@Autowired
 	private UserService userService;

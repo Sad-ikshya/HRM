@@ -10,7 +10,7 @@ import com.finalproject.HRM.web.user.entities.User;
 
 public interface UserRepository extends MongoRepository<User, String>{
 
-	public Optional<User> getByEmail(String email);
+	public Optional<User> findByEmail(String email);
 	public Page<User> findByDepartment(String department,Pageable page);
 	public Page<User> findByDesignation(String designation,Pageable page);
 	public Page<User> findByDepartmentAndDesignation(String department,String designation,Pageable page);

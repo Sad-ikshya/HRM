@@ -1,6 +1,9 @@
 package com.finalproject.HRM.web.user.entities;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -9,6 +12,9 @@ import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +30,10 @@ import lombok.ToString;
 @Builder
 @Getter
 @Setter
-public class User {
+public class User implements UserDetails{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String id;
 	@NotBlank(message = "Full Name can not be blank")
@@ -40,6 +49,38 @@ public class User {
 	@NotBlank(message = "Role can not be blank")
 	private Role role;
 	private String photo;
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.role.toString());
+		Set<GrantedAuthority> auths = new HashSet<>();
+		auths.add(authority);
+		return auths;
+	}
+	@Override
+	public String getPassword() {
+		return null;
+	}
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 	
 
 }
