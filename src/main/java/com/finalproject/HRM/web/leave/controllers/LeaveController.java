@@ -49,12 +49,5 @@ public class LeaveController {
 	public ResponseEntity<String> deleteLeave(@PathVariable String id) {
 		return new ResponseEntity<String>(leaveService.deleteLeave(id), HttpStatus.OK);
 	}
-	@GetMapping("/leave-summary/{employeeId}")
-	public ResponseEntity<List<LeaveSummaryDto>> getLeaveSummary(@PathVariable String employeeId){
-		return new ResponseEntity<List<LeaveSummaryDto>>(leaveService.getLeaveSummary(employeeId), HttpStatus.OK);
-	}
-	@GetMapping("/leave-balance/{employeeId}")
-	public ResponseEntity<List<LeaveBalanceDto>> getLeaveBalance(@PathVariable String employeeId){
-		return new ResponseEntity<List<LeaveBalanceDto>>(leaveService.getLeaveBalance(employeeId), HttpStatus.OK);
-	}
+	
 }

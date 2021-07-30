@@ -15,7 +15,7 @@ configurations {
 	}
 }
 
-mainClassName = 'src.main.java.com.finalproject.HRM.HrmApplication'
+mainClassName = 'com.finalproject.HRM.HrmApplication'
 
 repositories {
 	mavenCentral()
@@ -54,7 +54,7 @@ jar {
 	archiveBaseName = 'hrm'
     manifest {  
         attributes(  
-			'Main-Class': 'src.main.java.com.finalproject.HRM.HrmApplication'
+			'Main-Class': 'com.finalproject.HRM.HrmApplication'
         )  
     }  
 }  
