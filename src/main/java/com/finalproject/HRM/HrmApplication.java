@@ -1,4 +1,4 @@
-package src.main.java.com.finalproject.HRM;
+package com.finalproject.HRM;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
