@@ -48,6 +48,7 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "fuse-hrm" #Must be unique in Heroku
         heroku_email: "kidas201@gmail.com"
+        appdir: "build/libs/"
     - name: Cleanup Gradle Cache
       # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
       # Restoring these files from a GitHub Actions cache might cause problems for future builds.
