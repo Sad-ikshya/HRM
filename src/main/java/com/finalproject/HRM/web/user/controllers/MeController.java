@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.service.UserService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("/me")
 public class MeController {
@@ -18,7 +20,7 @@ public class MeController {
 	UserService userService;
 	
 	@GetMapping
-	public UserDto getLogedInUserDetail(Principal user)
+	public UserDto getLogedInUserDetail(@ApiIgnore Principal user)
 	{
 		System.out.println(user.getName());
 		return userService.getUserByEmail(user.getName());

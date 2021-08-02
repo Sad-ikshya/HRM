@@ -1,7 +1,6 @@
 package com.finalproject.HRM.web.user.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,20 +21,14 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@PostMapping
-	public UserDto addUser(@RequestBody UserDto user)
-	{
-		return userService.saveUser(user);
-	}
-	
 	@PutMapping("/{id}")
 	public UserDto updateUser(@PathVariable String id,@RequestBody UserDto user)
 	{
 		return userService.updateUser(id, user);
 	}
 	
-	@PostMapping("/uploadimage")
-	public String uploadImage(@RequestParam("image") MultipartFile image) throws Exception
+	@PostMapping("/{id}/image")
+	public String uploadImage(@PathVariable String id,@RequestParam("image") MultipartFile image) throws Exception
 	{
 		return userService.uploadImage(image);
 	}
@@ -44,11 +37,5 @@ public class UserController {
 	public UserDto getUserById(@PathVariable String id)
 	{
 		return userService.getUserById(id);
-	}
-	
-	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable String id)
-	{
-		userService.deleteUserById(id);
 	}
 }

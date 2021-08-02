@@ -1,6 +1,7 @@
 package com.finalproject.HRM.web.holiday.controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,39 +17,39 @@ import com.finalproject.HRM.web.holiday.dtos.HolidayDto;
 import com.finalproject.HRM.web.holiday.services.HolidayService;
 
 @RestController
-@RequestMapping("/admin/holidays")
+@RequestMapping("/admins/{adminid}/holidays")
 public class AdminHolidayController {
 
 	@Autowired
 	HolidayService holidayService;
 	
 	@GetMapping
-	public HolidayDto dummyGetHoliday()
+	public List<HolidayDto> getAllHoliday(@PathVariable String adminid)
 	{
-		HolidayDto resp = new HolidayDto("dummy", "dummy", new Date());
-		return resp;
+		return holidayService.getAllHoliday();
 	}
 	
+	
 	@GetMapping("/{id}")
-	public HolidayDto getHolidayByID(@PathVariable String id)
+	public HolidayDto getHolidayByID(@PathVariable String adminid,@PathVariable String id)
 	{
 		return holidayService.getHolidayById(id);
 	}
 	
 	@PostMapping
-	public HolidayDto addHoliday(@RequestBody HolidayDto holiday)
+	public HolidayDto addHoliday(@PathVariable String adminid,@RequestBody HolidayDto holiday)
 	{
 		return holidayService.addHoliday(holiday);
 	}
 	
 	@PutMapping("/{id}")
-	public HolidayDto updateHoliday(@PathVariable String id,@RequestBody HolidayDto holiday)
+	public HolidayDto updateHoliday(@PathVariable String adminid,@PathVariable String id,@RequestBody HolidayDto holiday)
 	{
 		return holidayService.updateHoliday(id, holiday);
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteHoliday(@PathVariable String id)
+	public String deleteHoliday(@PathVariable String adminid,@PathVariable String id)
 	{
 		return holidayService.deleteHoliday(id);
 	}
