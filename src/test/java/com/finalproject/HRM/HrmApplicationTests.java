@@ -1,4 +1,4 @@
-/*package com.finalproject.HRM;
+package com.finalproject.HRM;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,4 +11,3 @@ class HrmApplicationTests {
 	}
 
 }
-*/
