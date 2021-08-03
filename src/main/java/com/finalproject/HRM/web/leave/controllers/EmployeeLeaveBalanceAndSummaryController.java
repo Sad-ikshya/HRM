@@ -3,8 +3,6 @@ package com.finalproject.HRM.web.leave.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +19,12 @@ public class EmployeeLeaveBalanceAndSummaryController {
 	private LeaveService leaveService;
 	
 	@GetMapping("/leave-summary/{employeeId}")
-	public ResponseEntity<List<LeaveSummaryDto>> getLeaveSummary(@PathVariable String employeeId){
-		return new ResponseEntity<List<LeaveSummaryDto>>(leaveService.getLeaveSummary(employeeId), HttpStatus.OK);
+	public List<LeaveSummaryDto> getLeaveSummary(@PathVariable String employeeId){
+		return leaveService.getLeaveSummary(employeeId);
 	}
 	@GetMapping("/leave-balance/{employeeId}")
-	public ResponseEntity<List<LeaveBalanceDto>> getLeaveBalance(@PathVariable String employeeId){
-		return new ResponseEntity<List<LeaveBalanceDto>>(leaveService.getLeaveBalance(employeeId), HttpStatus.OK);
+	public List<LeaveBalanceDto> getLeaveBalance(@PathVariable String employeeId){
+		return leaveService.getLeaveBalance(employeeId);
 	}
 
 }

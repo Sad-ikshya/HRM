@@ -17,21 +17,21 @@ import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;
 import com.finalproject.HRM.web.leave.services.LeaveRequestService;
 
 @RestController
-@RequestMapping("/admin/leave-requests")
+@RequestMapping("/admins/{adminId}/leave-requests")
 public class AdminLeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
 	
 	@GetMapping()
-	public ResponseEntity<Page<LeaveRequestResponse>> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
+	public Page<LeaveRequestResponse> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
-		return new ResponseEntity<Page<LeaveRequestResponse>>(leaveRequestService.getAllLeaveRequests(index, size),
-				HttpStatus.OK);
+		return leaveRequestService.getAllLeaveRequests(index, size)
+				;
 	}
 	
 	@PatchMapping("/{leaveRequestId}")
-	public ResponseEntity<LeaveRequestResponse> updateleaveRequestStatus(@PathVariable String leaveRequestId, @RequestBody LeaveRequestStatusDto leaveRequestStatus){
-		return new ResponseEntity<LeaveRequestResponse>(leaveRequestService.updateLeaveStatus(leaveRequestId, leaveRequestStatus),HttpStatus.OK);
+	public LeaveRequestResponse updateleaveRequestStatus(@PathVariable String leaveRequestId, @RequestBody LeaveRequestStatusDto leaveRequestStatus){
+		return leaveRequestService.updateLeaveStatus(leaveRequestId, leaveRequestStatus);
 	}
 	
 

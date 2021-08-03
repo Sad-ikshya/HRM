@@ -1,15 +1,9 @@
 package com.finalproject.HRM.web.leave.controllers;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,34 +25,29 @@ public class LeaveRequestController {
 	private LeaveRequestService leaveRequestService;
 
 	@GetMapping()
-	public ResponseEntity<Page<LeaveRequestResponse>> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
+	public Page<LeaveRequestResponse> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
-		return new ResponseEntity<Page<LeaveRequestResponse>>(leaveRequestService.getAllLeaveRequests(index, size),
-				HttpStatus.OK);
+		return leaveRequestService.getAllLeaveRequests(index, size);
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<LeaveRequestResponse> saveLeaveRequest(@RequestBody LeaveRequestDto leaveRequest) {
-		return new ResponseEntity<LeaveRequestResponse>(leaveRequestService.saveLeaveRequest(leaveRequest),
-				HttpStatus.CREATED);
+	public LeaveRequestResponse saveLeaveRequest(@RequestBody LeaveRequestDto leaveRequest) {
+		return leaveRequestService.saveLeaveRequest(leaveRequest);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<LeaveRequestResponse> updateLeaveRequest(@PathVariable String id,
-			@RequestBody LeaveRequestDto leaveRequest) {
-		return new ResponseEntity<LeaveRequestResponse>(leaveRequestService.updateLeaveRequestDto(id, leaveRequest),
-				HttpStatus.OK);
+	public LeaveRequestResponse updateLeaveRequest(@PathVariable String id, @RequestBody LeaveRequestDto leaveRequest) {
+		return leaveRequestService.updateLeaveRequestDto(id, leaveRequest);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteLeaveRequest(@PathVariable String id) {
+	public String deleteLeaveRequest(@PathVariable String id) {
 
-		return new ResponseEntity<String>(leaveRequestService.deleteLeaveRequest(id), HttpStatus.OK);
+		return leaveRequestService.deleteLeaveRequest(id);
 	}
 
 	@GetMapping("/employee-id/{employeeId}")
-	public ResponseEntity<List<LeaveRequestResponse>> leaveDetailByEmployeeid(@PathVariable String employeeId) {
-		return new ResponseEntity<List<LeaveRequestResponse>>(leaveRequestService.leaveDetailByEmployeeId(employeeId),
-				HttpStatus.FOUND);
+	public List<LeaveRequestResponse> leaveDetailByEmployeeid(@PathVariable String employeeId) {
+		return leaveRequestService.leaveDetailByEmployeeId(employeeId);
 	}
 }

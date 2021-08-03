@@ -22,5 +22,6 @@ public class Leave {
 	private String id;
 	private String leaveName;
 	private Integer days;
+	private String createdBy;
 
 }
