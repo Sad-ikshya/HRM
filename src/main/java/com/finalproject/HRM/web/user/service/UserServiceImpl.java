@@ -1,9 +1,7 @@
 package com.finalproject.HRM.web.user.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.HRM.common.utils.FileUploadHelper;
+import com.finalproject.HRM.web.user.dtos.UserPaginationData;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.DeletedUser;
-import com.finalproject.HRM.web.user.entities.Role;
 import com.finalproject.HRM.web.user.entities.User;
 import com.finalproject.HRM.web.user.repositories.DeletedUserRepository;
 import com.finalproject.HRM.web.user.repositories.UserRepository;
@@ -31,10 +29,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	FileUploadHelper fileHelper;
-
-	private Date today = new Date();
 	
-	public List<User> pagination(int pageNo, int limit, String sortBy,String department, String designation) {
+	public Page<User> pagination(int pageNo, int limit, String sortBy,String department, String designation) {
 		Page<User> userData;
 		Sort sort = Sort.by(sortBy);
 		Pageable Page = PageRequest.of(pageNo, limit, sort);
@@ -54,12 +50,13 @@ public class UserServiceImpl implements UserService {
 		{
 			userData = userRepository.findAll(Page);
 		}
-		return userData.getContent();
+		return userData;
 	}
 	
 	@Override
-	public List<UserDto> getAllUser(int pageNo, int limit, String sortBy,String department, String designation) {
-		List<User> userList= pagination(pageNo,limit,sortBy,department, designation);
+	public UserPaginationData getAllUser(int pageNo, int limit, String sortBy,String department, String designation) {
+		Page<User> pagedUser = pagination(pageNo,limit,sortBy,department, designation);
+		List<User> userList= pagedUser.getContent();
 		List<UserDto> userDtoList=new ArrayList<>();
 		for(User user: userList) {
 			UserDto userDto= UserDto.builder().id(user.getId())
@@ -75,7 +72,12 @@ public class UserServiceImpl implements UserService {
 			
 			userDtoList.add(userDto);
 		}
-		return userDtoList;
+		UserPaginationData paginationData = UserPaginationData.builder()
+										.currentPage(pagedUser.getNumber())
+										.totalPage(pagedUser.getSize())
+										.usersData(userDtoList)
+										.build();
+		return paginationData;
 	}
 
 	@Override
@@ -115,51 +117,39 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto updateUser(String id, UserDto user) {
+	public UserDto updateUser(String id, UserDto user, String adminID) {
 		User userEntity = userRepository.findById(id)
 							.orElseThrow(()->new IllegalStateException("User not Found"));
 		
-		User updatedUser= null;
-//		if(userEntity.getRole() == Role.ADMIN)
-		{
-			updatedUser=User.builder()
+		User updatedUser=User.builder()
 					.id(id)
 					.fullName(user.getFullName()==null?userEntity.getFullName():user.getFullName())
 					.email(user.getEmail()==null?userEntity.getEmail():user.getEmail())
-					.department(user.getDepartment()==null || userEntity.getRole() != Role.ADMIN?
+					.department(user.getDepartment()==null || adminID == null?
 							userEntity.getDepartment():user.getDepartment())
-					.designation(user.getDesignation()==null || userEntity.getRole() != Role.ADMIN?
+					.designation(user.getDesignation()==null || adminID == null?
 							userEntity.getDesignation():user.getDesignation())
 					.bio(user.getBio()==null?userEntity.getBio():user.getBio())
-					.role(userEntity.getRole() != Role.ADMIN?userEntity.getRole():user.getRole())
+					.role(adminID == null?userEntity.getRole():user.getRole())
 					.photo(user.getPhoto()==null?userEntity.getPhoto():user.getPhoto())
 					.joinedDate(userEntity.getJoinedDate())
 					.build();
-		}
-//		else {
-//			updatedUser=User.builder()
-//					.id(id)
-//					.fullName(user.getFullName()==null?userEntity.getFullName():user.getFullName())
-//					.email(user.getEmail()==null?userEntity.getEmail():user.getEmail())
-//					.department(userEntity.getDepartment())
-//					.designation(userEntity.getDesignation())
-//					.bio(user.getBio()==null?userEntity.getBio():user.getBio())
-//					.role(user.getRole()==null?userEntity.getRole():user.getRole())
-//					.photo(user.getPhoto()==null?userEntity.getPhoto():user.getPhoto())
-//					.joinedDate(userEntity.getJoinedDate())
-//					.build();
-//		}
-//		
 		userRepository.save(updatedUser);
-		return user;
+		return UserDto.builder()
+					.fullName(updatedUser.getFullName())
+					.email(updatedUser.getEmail())
+					.department(updatedUser.getDepartment())
+					.designation(updatedUser.getDesignation())
+					.bio(updatedUser.getBio())
+					.role(updatedUser.getRole())
+					.photo(updatedUser.getPhoto())
+					.joinedDate(updatedUser.getJoinedDate())
+					.build();
 	}
 	
 	@Override
 	public String uploadImage(MultipartFile image) throws Exception
 	{
-//		System.out.println(image.getOriginalFilename());
-//		System.out.println(image.getSize());
-//		System.out.println(image.getContentType());
 		
 		if(image.isEmpty())
 		{

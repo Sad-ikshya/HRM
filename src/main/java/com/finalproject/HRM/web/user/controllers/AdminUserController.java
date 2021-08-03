@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.finalproject.HRM.web.user.dtos.UserPaginationData;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.service.UserService;
 
@@ -25,7 +26,7 @@ public class AdminUserController {
 	UserService userService;
 	
 	@GetMapping
-	public List<UserDto> getUserList(
+	public UserPaginationData getUserList(
 						@PathVariable String adminid,
 						@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
 						@RequestParam(name = "limit", defaultValue = "2") int limit,
@@ -44,7 +45,7 @@ public class AdminUserController {
 						@RequestBody UserDto user
 						)
 	{
-		return userService.updateUser(id, user);
+		return userService.updateUser(id, user,adminid);
 	}
 	
 	@PostMapping("/{id}/image")
