@@ -27,10 +27,7 @@ public class AdminLeaveController {
 		return leaveService.saveLeave(leave);
 	}
 
-	@GetMapping()
-	public List<LeaveDto> getAllLeaves(@PathVariable String adminId) {
-		return leaveService.getAllLeaves();
-	}
+	
 
 	@GetMapping("/{id}")
 	public LeaveDto getLeaveById(@PathVariable String adminId,@PathVariable String id) {
