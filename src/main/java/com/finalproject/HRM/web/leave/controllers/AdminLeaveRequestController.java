@@ -22,14 +22,14 @@ public class AdminLeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
 	
-	@GetMapping("/")
+	@GetMapping()
 	public ResponseEntity<Page<LeaveRequestResponse>> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
 		return new ResponseEntity<Page<LeaveRequestResponse>>(leaveRequestService.getAllLeaveRequests(index, size),
 				HttpStatus.OK);
 	}
 	
-	@PatchMapping("/set-status/{leaveRequestId}")
+	@PatchMapping("/{leaveRequestId}")
 	public ResponseEntity<LeaveRequestResponse> updateleaveRequestStatus(@PathVariable String leaveRequestId, @RequestBody LeaveRequestStatusDto leaveRequestStatus){
 		return new ResponseEntity<LeaveRequestResponse>(leaveRequestService.updateLeaveStatus(leaveRequestId, leaveRequestStatus),HttpStatus.OK);
 	}

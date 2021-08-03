@@ -21,7 +21,7 @@ import com.finalproject.HRM.web.leave.services.LeaveService;
 
 @RestController
 @RequestMapping("/admin/leaves")
-public class LeaveController {
+public class AdminLeaveController {
 	@Autowired
 	private LeaveService leaveService;
 
