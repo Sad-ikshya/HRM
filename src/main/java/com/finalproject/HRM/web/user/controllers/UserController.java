@@ -24,7 +24,7 @@ public class UserController {
 	@PutMapping("/{id}")
 	public UserDto updateUser(@PathVariable String id,@RequestBody UserDto user)
 	{
-		return userService.updateUser(id, user);
+		return userService.updateUser(id, user,null);
 	}
 	
 	@PostMapping("/{id}/image")

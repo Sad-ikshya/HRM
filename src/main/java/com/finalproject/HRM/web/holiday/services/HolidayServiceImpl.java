@@ -5,13 +5,19 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.HRM.web.holiday.dtos.HolidayDto;
+import com.finalproject.HRM.web.holiday.dtos.HolidayPaginationData;
 import com.finalproject.HRM.web.holiday.entities.DeletedHoliday;
 import com.finalproject.HRM.web.holiday.entities.Holiday;
 import com.finalproject.HRM.web.holiday.repositories.DeletedHolidayRepository;
 import com.finalproject.HRM.web.holiday.repositories.HolidayRepository;
+import com.finalproject.HRM.web.user.entities.User;
 
 @Service
 public class HolidayServiceImpl implements HolidayService{
@@ -22,9 +28,20 @@ public class HolidayServiceImpl implements HolidayService{
 	@Autowired
 	DeletedHolidayRepository deletedHolidayRepo;
 	
+	public Page<Holiday> pagination(int pageNo, int limit, String sortBy) {
+		Page<Holiday> holidayData;
+		Sort sort = Sort.by(sortBy);
+		Pageable Page = PageRequest.of(pageNo, limit, sort);
+
+		holidayData = holidayRepo.findAll(Page);
+		
+		return holidayData;
+	}
+	
 	@Override
-	public List<HolidayDto> getAllHoliday() {
-		List<Holiday> holidayList = holidayRepo.findAll();
+	public HolidayPaginationData getAllHoliday(int pageNo, int limit, String sortBy) {
+		Page<Holiday> holidayData = pagination(pageNo, limit, sortBy);
+		List<Holiday> holidayList = holidayData.getContent();
 		List<HolidayDto> holidayDtoList = new ArrayList<>();
 		
 		for(Holiday holiday:holidayList)
@@ -35,7 +52,13 @@ public class HolidayServiceImpl implements HolidayService{
 													.build();
 			holidayDtoList.add(holidayDto);
 		}
-		return holidayDtoList;
+		
+		HolidayPaginationData paginationData = HolidayPaginationData.builder()
+												.currentPage(holidayData.getNumber())
+												.totalPage(holidayData.getSize())
+												.holidayData(holidayDtoList)
+												.build();
+		return paginationData;
 	}
 
 	@Override
