@@ -1,5 +1,6 @@
 package com.finalproject.HRM.web;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,26 +24,24 @@ import com.finalproject.HRM.web.leave.services.LeaveRequestService;
 
 @RestController
 public class DashboardController {
-	
+
 	@Autowired
 	HolidayService holidayService;
-	
+
 	@Autowired
 	private LeaveRequestService leaveRequestService;
-	
+
 	@GetMapping("/upcoming-holiday")
-	public List<HolidayDto> getUpcomingHoliday()
-	{
+	public List<HolidayDto> getUpcomingHoliday() {
 		return holidayService.getUpcomingHoliday();
 	}
-	
+
 	@GetMapping("/date/{date}")
-	public ResponseEntity<Page<LeaveRequestResponse>> leaveDetailByDate(@PathVariable String date,
-			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd", Locale.ENGLISH);
-		formatter.setTimeZone(TimeZone.getTimeZone("Kathmandu/Nepal"));
-		
-		return new ResponseEntity<Page<LeaveRequestResponse>>(
-				leaveRequestService.leaveDetailByDate(formatter.parse(date), index, size), HttpStatus.OK);
+	public ResponseEntity<Page<LeaveRequestResponse>> leaveDetailByDate(@PathVariable BigInteger date,
+			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size)
+			throws ParseException {
+
+		return new ResponseEntity<Page<LeaveRequestResponse>>(leaveRequestService.leaveDetailByDate(date, index, size),
+				HttpStatus.OK);
 	}
 }

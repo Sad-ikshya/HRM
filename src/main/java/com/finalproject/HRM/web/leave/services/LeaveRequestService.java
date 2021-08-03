@@ -1,9 +1,11 @@
 package com.finalproject.HRM.web.leave.services;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestStatusDto;
@@ -18,11 +20,14 @@ public interface LeaveRequestService {
 
 	public String deleteLeaveRequest(String id);
 
+	public Page<LeaveRequestResponse> pagedLeaveDetailByEmployeeId(String employeeId, int index, int size);
 	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId);
 	
-	public Page<LeaveRequestResponse> leaveDetailByDate(Date date,int index, int size);
+	public Page<LeaveRequestResponse> leaveDetailByDate(BigInteger date,int index, int size);
 	
 	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus );
+
+	
 	
 
 }

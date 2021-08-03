@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
@@ -66,6 +70,31 @@ public class LeaveServiceImplementation implements LeaveService {
 	public String deleteLeave(String id) {
 		leaveRepository.deleteById(id);
 		return id;
+	}
+
+	public Page<LeaveSummaryDto> getPagedLeaveSummary(String employeeId, int index, int size) {
+		Pageable page = PageRequest.of(index, size);
+		UserDto user = userService.getUserById(employeeId);
+		if (user.getId() != "") {
+			Page<LeaveRequestResponse> leaveRequestsDto = leaveRequestService. pagedLeaveDetailByEmployeeId(employeeId, index, size);
+			List<LeaveSummaryDto> leaveSummaries = new ArrayList<LeaveSummaryDto>();
+			List<LeaveDto> leaveList = getAllLeaves();
+
+			for (LeaveDto leave : leaveList) {
+				LeaveSummaryDto leaveSummary = new LeaveSummaryDto();
+				leaveSummary.setLeaveName(leave.getLeaveName());
+				leaveSummary.setTotal(leave.getDays());
+				leaveSummary.setUse(
+						leaveRequestsDto.stream().filter(req -> req.getLeave().getId().equals(leave.getId())).count());
+				leaveSummary.setBalance(leaveSummary.getTotal() - leaveSummary.getUse());
+
+				leaveSummaries.add(leaveSummary);
+			}
+		Page<LeaveSummaryDto> leaveSummaryPage = new PageImpl<LeaveSummaryDto>(leaveSummaries, page,
+				leaveSummaries.size());
+		return leaveSummaryPage;
+		}
+		return null;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.finalproject.HRM.web.leave.requestDtos;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
@@ -22,8 +23,8 @@ import lombok.ToString;
 @Setter
 public class LeaveRequestDto {
 	private String id;
-	private Date fromDate;
-	private Date toDate;
+	private BigInteger fromDate;
+	private BigInteger toDate;
 	private String leaveReason;
 	private String leaveId;
 	private LeaveType leaveType;

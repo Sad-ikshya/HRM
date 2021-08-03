@@ -16,7 +16,7 @@ public class LeaveController {
 	@Autowired
 	private LeaveService leaveService;
 
-	@GetMapping()
+	@GetMapping
 	public List<LeaveDto> getAllLeaves() {
 		return leaveService.getAllLeaves();
 	}

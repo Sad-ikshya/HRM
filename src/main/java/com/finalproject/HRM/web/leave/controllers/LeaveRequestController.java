@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.leave.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +22,7 @@ public class LeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
 
-	@GetMapping()
+	@GetMapping
 	public Page<LeaveRequestResponse> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
 		return leaveRequestService.getAllLeaveRequests(index, size);
@@ -47,7 +45,8 @@ public class LeaveRequestController {
 	}
 
 	@GetMapping("/employee-id/{employeeId}")
-	public List<LeaveRequestResponse> leaveDetailByEmployeeid(@PathVariable String employeeId) {
-		return leaveRequestService.leaveDetailByEmployeeId(employeeId);
+	public Page<LeaveRequestResponse> leaveDetailByEmployeeid(@PathVariable String employeeId,
+			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) {
+		return leaveRequestService.pagedLeaveDetailByEmployeeId(employeeId, index, size);
 	}
 }

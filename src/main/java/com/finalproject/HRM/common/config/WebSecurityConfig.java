@@ -13,28 +13,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private JwtTokenFilter jwtTokenFilter;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.cors().disable().csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.exceptionHandling().authenticationEntryPoint(
-	                (request, response, ex) -> {
-	                    response.sendError(
-	                        HttpServletResponse.SC_UNAUTHORIZED,
-	                        ex.getMessage()
-	                    );
-	                }
-	            ).and()
-			.authorizeRequests()
-			.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**").permitAll()
-			.antMatchers("/admin/**").hasRole("ADMIN")
-			.anyRequest().authenticated().and()
-			.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
-	}	
-	
+
+		http.cors().disable().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
+				.authenticationEntryPoint((request, response, ex) -> {
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+				}).and().authorizeRequests()
+				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+						"/swagger-ui.html", "/webjars/**")
+				.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated().and()
+				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+	}
+
 }

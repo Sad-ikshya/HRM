@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,12 +60,12 @@ public class LeaveRequestServiceTest {
 	@Test
 	public void testAddLeaveRequest() {
 
-		leaveRequest = LeaveRequestDto.builder().id("12345").fromDate(new Date(2021 - 07 - 10))
-				.toDate(new Date(2021 - 07 - 15)).leaveReason("busy in household work").leaveId("1234")
+		leaveRequest = LeaveRequestDto.builder().id("12345").fromDate(new BigInteger("123456736"))
+				.toDate(new BigInteger("123456736")).leaveReason("busy in household work").leaveId("1234")
 				.leaveType(LeaveType.FULL).status(Status.PENDING).employeeId("1234").build();
 
-		leaveRequestResponse = LeaveRequestResponse.builder().id("12345").fromDate(new Date(2021 - 07 - 10))
-				.toDate(new Date(2021 - 07 - 15)).leaveReason("busy in household work").leave(leave)
+		leaveRequestResponse = LeaveRequestResponse.builder().id("12345").fromDate(new BigInteger("123456736"))
+				.toDate(new BigInteger("123456736")).leaveReason("busy in household work").leave(leave)
 				.leaveType(LeaveType.FULL).employee(user).build();
 
 		when(leaveRequestService.saveLeaveRequest(leaveRequest)).thenReturn(leaveRequestResponse);
@@ -87,7 +88,7 @@ public class LeaveRequestServiceTest {
 	public void testGetAllLeaveRequests() {
 
 		LeaveRequestResponse leaveRequest = LeaveRequestResponse.builder().id("12345")
-				.fromDate(new Date(2021 - 07 - 10)).toDate(new Date(2021 - 07 - 11))
+				.fromDate(new BigInteger("123456736")).toDate(new BigInteger("123456736"))
 				.leaveReason("busy in household work").leave(leave).leaveType(LeaveType.FULL).status(Status.PENDING)
 				.employee(user).build();
 
@@ -103,8 +104,8 @@ public class LeaveRequestServiceTest {
 	@Test
 	public void testUpadateLeaveRequest() {
 
-		LeaveRequestDto leaveRequest = LeaveRequestDto.builder().id("123456").fromDate(new Date(2021 - 07 - 10))
-				.toDate(new Date(2021 - 07 - 115)).leaveReason("busy in household work").leaveId("1234")
+		LeaveRequestDto leaveRequest = LeaveRequestDto.builder().id("123456").fromDate(new BigInteger("123456736"))
+				.toDate(new BigInteger("123456736")).leaveReason("busy in household work").leaveId("1234")
 				.leaveType(LeaveType.FULL).status(Status.PENDING).employeeId("1234").build();
 
 		when(leaveRequestService.updateLeaveRequestDto("12345", leaveRequest)).thenReturn(leaveRequestResponse);

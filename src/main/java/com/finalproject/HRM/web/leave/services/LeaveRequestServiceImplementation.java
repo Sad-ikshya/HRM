@@ -1,5 +1,6 @@
 package com.finalproject.HRM.web.leave.services;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -114,7 +115,36 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 	}
 
 	@Override
-	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId) throws UsernameNotFoundException {
+	public Page<LeaveRequestResponse> pagedLeaveDetailByEmployeeId(String employeeId, int index, int size) throws UsernameNotFoundException {
+		Pageable page=PageRequest.of(index, size);
+		Optional<User> userEntity = userRepository.findById(employeeId);
+		if (userEntity.isEmpty())
+			throw new UsernameNotFoundException(employeeId + " user not found");
+
+		Page<LeaveRequest> leaveRequest = leaveRequestRepository.findByEmployeeId(employeeId,page);
+		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
+		for (LeaveRequest l : leaveRequest) {
+			User u = userEntity.get();
+			Optional<Leave> leaveEntity = leaveRepository.findById(l.getLeaveId());
+
+			LeaveDto leave = LeaveDto.builder().id(l.getLeaveId()).leaveName(leaveEntity.get().getLeaveName()).build();
+			UserDto employee = UserDto.builder().id(employeeId).fullName(u.getFullName()).email(u.getEmail())
+					.department(u.getDepartment()).designation(u.getDesignation()).bio(u.getBio())
+					.joinedDate(u.getJoinedDate()).photo(u.getPhoto()).build();
+			LeaveRequestResponse leaveRequestResponse = LeaveRequestResponse.builder().id(l.getId())
+					.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).leave(leave)
+					.leaveType(l.getLeaveType()).status(l.getStatus()).employee(employee).build();
+
+			leaveRequests.add(leaveRequestResponse);
+		}
+		Page<LeaveRequestResponse> leaveRequestResponsePage=new PageImpl<LeaveRequestResponse>(leaveRequests, page, leaveRequests.size());
+
+		return leaveRequestResponsePage;
+
+	}
+	
+	@Override
+	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId){
 		Optional<User> userEntity = userRepository.findById(employeeId);
 		if (userEntity.isEmpty())
 			throw new UsernameNotFoundException(employeeId + " user not found");
@@ -135,13 +165,11 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 
 			leaveRequests.add(leaveRequestResponse);
 		}
-
 		return leaveRequests;
-
 	}
 
 	@Override
-	public Page<LeaveRequestResponse> leaveDetailByDate(Date date, int index, int size) {
+	public Page<LeaveRequestResponse> leaveDetailByDate(BigInteger date, int index, int size) {
 		Pageable page = PageRequest.of(index, size);
 		Page<LeaveRequest> leaveRequest = leaveRequestRepository.findByFromDate(date, page);
 		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();

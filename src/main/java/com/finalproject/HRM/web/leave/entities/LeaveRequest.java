@@ -1,5 +1,6 @@
 package com.finalproject.HRM.web.leave.entities;
 
+import java.math.BigInteger;
 import java.util.Date;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
@@ -28,9 +29,9 @@ public class LeaveRequest {
 	@Id
 	private String id;
 	@FutureOrPresent
-	private Date fromDate;
+	private BigInteger fromDate;
 	@FutureOrPresent
-	private Date toDate;
+	private BigInteger toDate;
 	@NotBlank(message = "Leave reason should not be blank")
 	@Size(min = 20, max = 80)
 	private String leaveReason;
