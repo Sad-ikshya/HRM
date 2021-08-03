@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.finalproject.HRM.common.utils.FileUploadHelper;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.DeletedUser;
+import com.finalproject.HRM.web.user.entities.Role;
 import com.finalproject.HRM.web.user.entities.User;
 import com.finalproject.HRM.web.user.repositories.DeletedUserRepository;
 import com.finalproject.HRM.web.user.repositories.UserRepository;
@@ -78,30 +79,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto saveUser(UserDto user) {
-		//User userEntity=userRepository.getByEmail(user.getEmail()).get();
-		Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
-		if(userOptional.isEmpty())
-		{
-			User userEntity=User.builder()
-							.fullName(user.getFullName())
-							.email(user.getEmail())
-							.department(user.getDepartment())
-							.designation(user.getDesignation())
-							.bio(user.getBio())
-							.joinedDate(today)
-							.role(user.getRole())
-							.photo(user.getPhoto())
-							.build();
-			
-		userRepository.insert(userEntity);
-			
-		}
-		
-		return user;
-	}
-
-	@Override
 	public UserDto getUserByEmail(String email) {
 		User user=userRepository.findByEmail(email)
 				.orElseThrow(()->new IllegalStateException("User not Found"));
@@ -142,18 +119,38 @@ public class UserServiceImpl implements UserService {
 		User userEntity = userRepository.findById(id)
 							.orElseThrow(()->new IllegalStateException("User not Found"));
 		
-		User newUser=User.builder().id(id)
-									.fullName(user.getFullName())
-									.email(user.getEmail())
-									.department(user.getDepartment())
-									.designation(user.getDesignation())
-									.bio(user.getBio())
-									.role(user.getRole())
-									.photo(user.getPhoto())
-									.build();
-		
-		userEntity = newUser;
-		userRepository.save(userEntity);
+		User updatedUser= null;
+//		if(userEntity.getRole() == Role.ADMIN)
+		{
+			updatedUser=User.builder()
+					.id(id)
+					.fullName(user.getFullName()==null?userEntity.getFullName():user.getFullName())
+					.email(user.getEmail()==null?userEntity.getEmail():user.getEmail())
+					.department(user.getDepartment()==null || userEntity.getRole() != Role.ADMIN?
+							userEntity.getDepartment():user.getDepartment())
+					.designation(user.getDesignation()==null || userEntity.getRole() != Role.ADMIN?
+							userEntity.getDesignation():user.getDesignation())
+					.bio(user.getBio()==null?userEntity.getBio():user.getBio())
+					.role(userEntity.getRole() != Role.ADMIN?userEntity.getRole():user.getRole())
+					.photo(user.getPhoto()==null?userEntity.getPhoto():user.getPhoto())
+					.joinedDate(userEntity.getJoinedDate())
+					.build();
+		}
+//		else {
+//			updatedUser=User.builder()
+//					.id(id)
+//					.fullName(user.getFullName()==null?userEntity.getFullName():user.getFullName())
+//					.email(user.getEmail()==null?userEntity.getEmail():user.getEmail())
+//					.department(userEntity.getDepartment())
+//					.designation(userEntity.getDesignation())
+//					.bio(user.getBio()==null?userEntity.getBio():user.getBio())
+//					.role(user.getRole()==null?userEntity.getRole():user.getRole())
+//					.photo(user.getPhoto()==null?userEntity.getPhoto():user.getPhoto())
+//					.joinedDate(userEntity.getJoinedDate())
+//					.build();
+//		}
+//		
+		userRepository.save(updatedUser);
 		return user;
 	}
 	

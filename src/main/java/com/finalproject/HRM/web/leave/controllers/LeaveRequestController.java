@@ -61,14 +61,4 @@ public class LeaveRequestController {
 		return new ResponseEntity<List<LeaveRequestResponse>>(leaveRequestService.leaveDetailByEmployeeId(employeeId),
 				HttpStatus.FOUND);
 	}
-
-	@GetMapping("/date/{date}")
-	public ResponseEntity<Page<LeaveRequestResponse>> leaveDetailByDate(@PathVariable String date,
-			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) throws ParseException {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-dd", Locale.ENGLISH);
-		formatter.setTimeZone(TimeZone.getTimeZone("Kathmandu/Nepal"));
-		
-		return new ResponseEntity<Page<LeaveRequestResponse>>(
-				leaveRequestService.leaveDetailByDate(formatter.parse(date), index, size), HttpStatus.OK);
-	}
 }
