@@ -20,13 +20,13 @@ public class EmployeeLeaveBalanceAndSummaryController {
 	@Autowired
 	private LeaveService leaveService;
 
-	@GetMapping("/leave-summary/{employeeId}")
+	@GetMapping("/leave-summaries/{employeeId}")
 	public Page<LeaveSummaryDto> getLeaveSummary(@PathVariable String employeeId,
 			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size) {
 		return leaveService.getPagedLeaveSummary(employeeId, index, size);
 	}
 
-	@GetMapping("/leave-balance/{employeeId}")
+	@GetMapping("/leave-balances/{employeeId}")
 	public List<LeaveBalanceDto> getLeaveBalance(@PathVariable String employeeId) {
 		return leaveService.getLeaveBalance(employeeId);
 	}
