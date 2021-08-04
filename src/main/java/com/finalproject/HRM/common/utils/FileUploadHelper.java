@@ -1,11 +1,13 @@
 package com.finalproject.HRM.common.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,8 +16,15 @@ public class FileUploadHelper {
 	
 //	private final String LOCATION = "/home/rukesh/Documents/spring/HRM/src/main/resources/static/image/upload/";
 	
-	@Value("${image.uploadPath}")
-	private String LOCATION;
+//	@Value("${image.uploadPath}")
+//	private String LOCATION;
+	
+	private String LOCATION = new ClassPathResource("static/image/upload/").getFile().getAbsolutePath();
+	
+	public FileUploadHelper() throws IOException
+	{
+		
+	}
 	
 	public String upload(MultipartFile file) throws Exception
 	{
@@ -29,6 +38,7 @@ public class FileUploadHelper {
 		catch (Exception e) {
 			throw new Exception("fail to upload file "+e);
 		}
-		return path;
+//		return path;
+		return file.getOriginalFilename();
 	}
 }
