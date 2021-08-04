@@ -15,7 +15,7 @@ import com.finalproject.HRM.web.leave.responseDtos.LeaveSummaryDto;
 import com.finalproject.HRM.web.leave.services.LeaveService;
 
 @RestController
-@RequestMapping("/leaves")
+@RequestMapping("users/{userid}/leaves")
 public class EmployeeLeaveBalanceAndSummaryController {
 	@Autowired
 	private LeaveService leaveService;

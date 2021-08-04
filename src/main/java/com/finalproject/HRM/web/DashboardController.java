@@ -3,6 +3,7 @@ package com.finalproject.HRM.web;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -36,12 +37,10 @@ public class DashboardController {
 		return holidayService.getUpcomingHoliday();
 	}
 
-	@GetMapping("/date/{date}")
-	public ResponseEntity<Page<LeaveRequestResponse>> leaveDetailByDate(@PathVariable BigInteger date,
-			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size)
-			throws ParseException {
-
-		return new ResponseEntity<Page<LeaveRequestResponse>>(leaveRequestService.leaveDetailByDate(date, index, size),
-				HttpStatus.OK);
+	@GetMapping("/employees-on-leave")
+	public Page<LeaveRequestResponse> leaveDetailByTodayDate(
+			@RequestParam(defaultValue = "0") int index, @RequestParam(defaultValue = "10") int size){
+		Long todayDate=new Date().getTime();
+		return leaveRequestService.leaveDetailByTodayDate(todayDate, index, size);
 	}
 }

@@ -26,11 +26,13 @@ import lombok.ToString;
 @Setter
 public class LeaveRequestResponse {
 	private String id;
-	private BigInteger fromDate;
-	private BigInteger toDate;
+	private Long fromDate;
+	private Long toDate;
 	private String leaveReason;
 	private LeaveDto leave;
 	private LeaveType leaveType;
 	private Status status;
+	private int days;
+	private String verifiedBy;
 	private UserDto employee;
 }

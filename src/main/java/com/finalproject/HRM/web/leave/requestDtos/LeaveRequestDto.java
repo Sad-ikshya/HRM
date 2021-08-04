@@ -23,8 +23,8 @@ import lombok.ToString;
 @Setter
 public class LeaveRequestDto {
 	private String id;
-	private BigInteger fromDate;
-	private BigInteger toDate;
+	private Long fromDate;
+	private Long toDate;
 	private String leaveReason;
 	private String leaveId;
 	private LeaveType leaveType;

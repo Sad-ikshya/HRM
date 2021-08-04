@@ -16,6 +16,4 @@ public interface LeaveRequestRepository extends MongoRepository<LeaveRequest, St
 
 	public List<LeaveRequest> findByEmployeeId(String employeeId);
 
-	@Query("{'fromDate':?0}")
-	public Page<LeaveRequest> findByFromDate(BigInteger date, Pageable pageable);
 }

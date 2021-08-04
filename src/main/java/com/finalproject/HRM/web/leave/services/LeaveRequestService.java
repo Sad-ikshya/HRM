@@ -13,6 +13,7 @@ import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;
 
 public interface LeaveRequestService {
 	public Page<LeaveRequestResponse> getAllLeaveRequests(int index, int size);
+	public Page<LeaveRequestResponse> employeeGetAllLeaveRequests(int index, int size);
 
 	public LeaveRequestResponse saveLeaveRequest(LeaveRequestDto leaveRequest);
 
@@ -23,11 +24,7 @@ public interface LeaveRequestService {
 	public Page<LeaveRequestResponse> pagedLeaveDetailByEmployeeId(String employeeId, int index, int size);
 	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId);
 	
-	public Page<LeaveRequestResponse> leaveDetailByDate(BigInteger date,int index, int size);
+	public Page<LeaveRequestResponse> leaveDetailByTodayDate(Long date,int index, int size);
 	
-	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus );
-
-	
-	
-
+	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus, String adminId );
 }

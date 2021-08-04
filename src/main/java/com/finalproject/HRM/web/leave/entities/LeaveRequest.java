@@ -28,10 +28,8 @@ import lombok.ToString;
 public class LeaveRequest {
 	@Id
 	private String id;
-	@FutureOrPresent
-	private BigInteger fromDate;
-	@FutureOrPresent
-	private BigInteger toDate;
+	private Long fromDate;
+	private Long toDate;
 	@NotBlank(message = "Leave reason should not be blank")
 	@Size(min = 20, max = 80)
 	private String leaveReason;
@@ -40,6 +38,8 @@ public class LeaveRequest {
 	private LeaveType leaveType;
 	private Status status;
 	@NotBlank(message = "Employee id cannot be blank")
+	private int days;
+	private String verfiedBy;
 	private String employeeId;
 
 }

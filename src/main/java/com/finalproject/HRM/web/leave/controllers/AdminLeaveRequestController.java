@@ -22,7 +22,7 @@ public class AdminLeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
 	
-	@GetMapping()
+	@GetMapping
 	public Page<LeaveRequestResponse> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
 		return leaveRequestService.getAllLeaveRequests(index, size)
@@ -30,8 +30,8 @@ public class AdminLeaveRequestController {
 	}
 	
 	@PatchMapping("/{leaveRequestId}")
-	public LeaveRequestResponse updateleaveRequestStatus(@PathVariable String leaveRequestId, @RequestBody LeaveRequestStatusDto leaveRequestStatus){
-		return leaveRequestService.updateLeaveStatus(leaveRequestId, leaveRequestStatus);
+	public LeaveRequestResponse updateleaveRequestStatus(@PathVariable String leaveRequestId, @RequestBody LeaveRequestStatusDto leaveRequestStatus,@PathVariable String adminId){
+		return leaveRequestService.updateLeaveStatus(leaveRequestId, leaveRequestStatus, adminId);
 	}
 	
 

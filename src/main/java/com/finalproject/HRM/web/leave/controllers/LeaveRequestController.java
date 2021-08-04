@@ -23,9 +23,9 @@ public class LeaveRequestController {
 	private LeaveRequestService leaveRequestService;
 
 	@GetMapping
-	public Page<LeaveRequestResponse> getAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
+	public Page<LeaveRequestResponse> employeeGetAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
-		return leaveRequestService.getAllLeaveRequests(index, size);
+		return leaveRequestService.employeeGetAllLeaveRequests(index, size);
 	}
 
 	@PostMapping("/")
