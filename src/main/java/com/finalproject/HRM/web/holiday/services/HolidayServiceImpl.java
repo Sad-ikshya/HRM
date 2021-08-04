@@ -120,9 +120,16 @@ public class HolidayServiceImpl implements HolidayService{
 	}
 
 	@Override
-	public List<HolidayDto> getUpcomingHoliday() {
+	public HolidayPaginationData getUpcomingHoliday(int pageNo, int limit, String sortBy) {
 		Date today = new Date();
-		List<Holiday> holidayList = holidayRepo.findByDateGreaterThan(today);
+		
+		Page<Holiday> holidayData;
+		Sort sort = Sort.by(sortBy);
+		Pageable Page = PageRequest.of(pageNo, limit, sort);
+
+		holidayData = holidayRepo.findByDateGreaterThan(today,Page);
+		
+		List<Holiday> holidayList = holidayData.getContent();
 		List<HolidayDto> holidayDtoList = new ArrayList<>();
 		
 		for(Holiday holiday:holidayList)
@@ -133,7 +140,13 @@ public class HolidayServiceImpl implements HolidayService{
 													.build();
 			holidayDtoList.add(holidayDto);
 		}
-		return holidayDtoList;
+		
+		HolidayPaginationData paginationData = HolidayPaginationData.builder()
+											.currentPage(holidayData.getNumber())
+											.totalPage(holidayData.getSize())
+											.holidayData(holidayDtoList)
+											.build();
+		return paginationData;
 	}
 
 }

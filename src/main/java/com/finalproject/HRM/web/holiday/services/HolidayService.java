@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.holiday.services;
 
-import java.util.List;
-
 import com.finalproject.HRM.web.holiday.dtos.HolidayDto;
 import com.finalproject.HRM.web.holiday.dtos.HolidayPaginationData;
 
@@ -11,5 +9,5 @@ public interface HolidayService {
 	public HolidayDto addHoliday(HolidayDto holiday);
 	public HolidayDto updateHoliday(String id,HolidayDto holiday);
 	public String deleteHoliday(String id);
-	public List<HolidayDto> getUpcomingHoliday();
+	public HolidayPaginationData getUpcomingHoliday(int pageNo, int limit, String sortBy);
 }
