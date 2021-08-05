@@ -207,6 +207,7 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 		List<LeaveRequest> leaveRequest = leaveRequestRepository.findAll();
 		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
 		for (LeaveRequest l : leaveRequest) {
+			
 			if(l.getFromDate()<date &&date<l.getToDate()) {
 				
 			LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
