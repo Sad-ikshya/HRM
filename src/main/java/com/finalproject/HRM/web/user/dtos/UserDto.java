@@ -25,7 +25,7 @@ public class UserDto {
 	private String department;
 	private String designation;
 	private String bio;
-	private Date joinedDate;
+	private Long joinedDate;
 	private Role role;
 	private String photo;
 

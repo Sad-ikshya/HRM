@@ -90,7 +90,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			User user = null;
 			if (useropt.isEmpty()) {
 				//If user is not present on database - save user first
-				User userEntity = User.builder().fullName(name).email(email).joinedDate(new Date()).role(Role.EMPLOYEE)
+				User userEntity = User.builder().fullName(name).email(email).joinedDate(new Date().getTime()/1000).role(Role.EMPLOYEE)
 						.photo(pictureUrl).build();
 
 				user = userRepo.insert(userEntity);

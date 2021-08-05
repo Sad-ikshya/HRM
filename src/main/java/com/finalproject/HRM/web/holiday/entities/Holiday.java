@@ -28,5 +28,5 @@ public class Holiday {
 	@NotBlank(message = "description can not be blank")
 	private String description;
 	@NotBlank(message = "date can not be blank")
-	private Date date;
+	private Long date;
 }

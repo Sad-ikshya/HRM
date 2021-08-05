@@ -19,5 +19,5 @@ import lombok.ToString;
 public class HolidayDto {
 	private String id;
 	private String description;
-	private Date date;
+	private Long date;
 }

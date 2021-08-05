@@ -45,7 +45,7 @@ public class User implements UserDetails{
 	private String department;
 	private String designation;
 	private String bio;
-	private Date joinedDate;
+	private Long joinedDate;
 	@NotBlank(message = "Role can not be blank")
 	private Role role;
 	private String photo;
