@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.holiday.dtos;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,5 +1,8 @@
 package com.finalproject.HRM.web.holiday.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +20,6 @@ import com.finalproject.HRM.web.holiday.entities.DeletedHoliday;
 import com.finalproject.HRM.web.holiday.entities.Holiday;
 import com.finalproject.HRM.web.holiday.repositories.DeletedHolidayRepository;
 import com.finalproject.HRM.web.holiday.repositories.HolidayRepository;
-import com.finalproject.HRM.web.user.entities.User;
 
 @Service
 public class HolidayServiceImpl implements HolidayService{
@@ -120,9 +122,13 @@ public class HolidayServiceImpl implements HolidayService{
 	}
 
 	@Override
-	public HolidayPaginationData getUpcomingHoliday(int pageNo, int limit, String sortBy) {
-		Date today = new Date();
-		long currentDate = today.getTime() /1000;
+	public HolidayPaginationData getUpcomingHoliday(int pageNo, int limit, String sortBy) throws ParseException {
+		DateFormat formatter = new SimpleDateFormat("yyy/MM/dd");
+
+		Date today1 = new Date();
+
+		Date todayWithZeroTime = formatter.parse(formatter.format(today1));
+		long currentDate = todayWithZeroTime.getTime() / 1000;
 		
 		Page<Holiday> holidayData;
 		Sort sort = Sort.by(sortBy);

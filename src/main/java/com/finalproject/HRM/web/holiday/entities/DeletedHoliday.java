@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.holiday.entities;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.Id;

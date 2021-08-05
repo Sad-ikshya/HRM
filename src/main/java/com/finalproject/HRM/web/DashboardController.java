@@ -1,5 +1,7 @@
 package com.finalproject.HRM.web;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class DashboardController {
 							@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
 							@RequestParam(name = "limit", defaultValue = "2") int limit,
 							@RequestParam(name = "sortBy", defaultValue = "id") String sortBy
-							) 
+							) throws ParseException 
 	{
 		return holidayService.getUpcomingHoliday(pageNo, limit, sortBy);
 	}
