@@ -122,12 +122,13 @@ public class HolidayServiceImpl implements HolidayService{
 	@Override
 	public HolidayPaginationData getUpcomingHoliday(int pageNo, int limit, String sortBy) {
 		Date today = new Date();
+		long currentDate = today.getTime() /1000;
 		
 		Page<Holiday> holidayData;
 		Sort sort = Sort.by(sortBy);
 		Pageable Page = PageRequest.of(pageNo, limit, sort);
 
-		holidayData = holidayRepo.findByDateGreaterThan(today,Page);
+		holidayData = holidayRepo.findByDateGreaterThan(currentDate,Page);
 		
 		List<Holiday> holidayList = holidayData.getContent();
 		List<HolidayDto> holidayDtoList = new ArrayList<>();

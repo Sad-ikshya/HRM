@@ -73,16 +73,16 @@ public class LeaveRequestServiceTest {
 		assertThat(addedLeaveRequest).usingRecursiveComparison().isEqualTo(leaveRequestResponse);
 	}
 
-	@Test
-	public void testLeaveDetailByDate() {
-		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
-
-		leaveRequests.add(leaveRequestResponse);
-		Pageable page = PageRequest.of(0, 10);
-		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
-				leaveRequests.size());
-		when(leaveRequestService.leaveDetailByTodayDate(null, 0, 10)).thenReturn(leaveRequestDtoPage);
-	}
+//	@Test
+//	public void testLeaveDetailByDate() {
+//		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
+//
+//		leaveRequests.add(leaveRequestResponse);
+//		Pageable page = PageRequest.of(0, 10);
+//		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
+//				leaveRequests.size());
+//		when(leaveRequestService.leaveDetailByTodayDate(null, 0, 10)).thenReturn(leaveRequestDtoPage);
+//	}
 
 	@Test
 	public void testGetAllLeaveRequests() {

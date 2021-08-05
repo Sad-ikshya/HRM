@@ -20,5 +20,5 @@ public class DeletedHolidayDto {
 
 	private String id;
 	private String description;
-	private Date date;
+	private Long date;
 }
