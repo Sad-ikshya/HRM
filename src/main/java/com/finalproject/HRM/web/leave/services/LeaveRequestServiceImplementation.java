@@ -1,8 +1,7 @@
 package com.finalproject.HRM.web.leave.services;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.Period;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +27,7 @@ import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.User;
 import com.finalproject.HRM.web.user.repositories.UserRepository;
 import com.finalproject.HRM.web.user.service.UserService;
+import com.nimbusds.jose.shaded.json.parser.ParseException;
 
 @Service
 public class LeaveRequestServiceImplementation implements LeaveRequestService {
@@ -202,14 +202,39 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 		return leaveRequests;
 	}
 
-	@Override
-	public Page<LeaveRequestResponse> leaveDetailByTodayDate(Long date, int index, int size) {
-		Pageable page = PageRequest.of(index, size);
+	public  List<LeaveRequest> filterDate() throws java.text.ParseException
+	{	
+		DateFormat formatter = new SimpleDateFormat("yyy/MM/dd");
+
+		Date today1 = new Date();
+
+		Date todayWithZeroTime = formatter.parse(formatter.format(today1));
+		long todayunix = todayWithZeroTime.getTime() / 1000;
+		
 		List<LeaveRequest> leaveRequest = leaveRequestRepository.findAll();
+		List<LeaveRequest> newlist = new ArrayList<>() ;
+		
+		for(LeaveRequest leaveReq:leaveRequest)
+		{
+			long from = leaveReq.getFromDate();
+			long to = leaveReq.getToDate();
+			if(from<=todayunix && to >= todayunix)
+			{
+				newlist.add(leaveReq);
+			}
+		}
+		System.out.println(newlist);
+		return newlist;
+	}
+	
+	@Override
+	public Page<LeaveRequestResponse> leaveDetailByTodayDate(int index, int size) throws java.text.ParseException {
+		Pageable page = PageRequest.of(index, size);
+		List<LeaveRequest> leaveRequest = filterDate();
 		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
 		for (LeaveRequest l : leaveRequest) {
 			
-			if(l.getFromDate()<date &&date<l.getToDate()) {
+//			if(l.getFromDate()<date &&date<l.getToDate()) {
 				
 			LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
 			UserDto userDto = userService.getUserById(l.getEmployeeId());
@@ -218,7 +243,7 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 					.leaveType(l.getLeaveType()).status(l.getStatus()).employee(userDto).build();
 
 			leaveRequests.add(leaveRequestResponse);
-			}
+//			}
 		}
 		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
 				leaveRequests.size());

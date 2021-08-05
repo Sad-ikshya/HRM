@@ -1,11 +1,8 @@
 package com.finalproject.HRM.web.leave.services;
 
-import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestStatusDto;
@@ -24,7 +21,7 @@ public interface LeaveRequestService {
 	public Page<LeaveRequestResponse> pagedLeaveDetailByEmployeeId(String employeeId, int index, int size);
 	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId);
 	
-	public Page<LeaveRequestResponse> leaveDetailByTodayDate(Long date,int index, int size);
+	public Page<LeaveRequestResponse> leaveDetailByTodayDate(int index, int size)throws java.text.ParseException;
 	
 	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus, String adminId );
 }
