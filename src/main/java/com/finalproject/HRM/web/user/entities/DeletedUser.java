@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.user.entities;
 
-import java.util.Date;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

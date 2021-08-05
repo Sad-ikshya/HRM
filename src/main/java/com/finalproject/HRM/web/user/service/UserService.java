@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.user.service;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.HRM.web.user.dtos.UserPaginationData;

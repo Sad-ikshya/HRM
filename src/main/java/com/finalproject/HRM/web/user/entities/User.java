@@ -1,7 +1,6 @@
 package com.finalproject.HRM.web.user.entities;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

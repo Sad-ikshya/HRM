@@ -1,8 +1,5 @@
 package com.finalproject.HRM.web.user.dtos;
 
-import java.util.Date;
-
-
 import com.finalproject.HRM.web.user.entities.Role;
 
 import lombok.AllArgsConstructor;
