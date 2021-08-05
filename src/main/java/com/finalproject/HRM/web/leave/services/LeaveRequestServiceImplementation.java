@@ -116,6 +116,7 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 				.employeeId(leaveRequest.getEmployeeId()).build();
 
 		leaveRequestEntity = leaveRequestRepository.save(leaveRequestEntity);
+		leaveRequest.setId(leaveRequestEntity.getId());
 
 		return LeaveRequestResponse.builder().id(leaveRequest.getId()).fromDate(leaveRequest.getFromDate())
 				.toDate(leaveRequest.getToDate()).leaveReason(leaveRequest.getLeaveReason()).leave(leaveDto)
