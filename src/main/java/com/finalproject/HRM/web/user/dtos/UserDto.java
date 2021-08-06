@@ -1,5 +1,7 @@
 package com.finalproject.HRM.web.user.dtos;
 
+import java.util.List;
+
 import com.finalproject.HRM.web.user.entities.Role;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +25,7 @@ public class UserDto {
 	private String designation;
 	private String bio;
 	private Long joinedDate;
-	private Role role;
+	private List<Role>  roles;
 	private String photo;
 
 }

@@ -1,5 +1,6 @@
 package com.finalproject.HRM.common.config;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -88,9 +89,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 			// Get user identity and set it on the spring security context
 			Optional<User> useropt = userRepo.findByEmail(email);
 			User user = null;
+			List<Role> role = new ArrayList<>();
+			role.add(Role.EMPLOYEE);
+			
 			if (useropt.isEmpty()) {
 				//If user is not present on database - save user first
-				User userEntity = User.builder().fullName(name).email(email).joinedDate(new Date().getTime()/1000).role(Role.EMPLOYEE)
+				User userEntity = User.builder()
+						.fullName(name)
+						.email(email)
+						.joinedDate(new Date().getTime()/1000)
+						.roles(role)
 						.photo(pictureUrl).build();
 
 				user = userRepo.insert(userEntity);

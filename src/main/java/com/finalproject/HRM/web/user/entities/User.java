@@ -2,6 +2,7 @@ package com.finalproject.HRM.web.user.entities;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -46,12 +47,12 @@ public class User implements UserDetails{
 	private String bio;
 	private Long joinedDate;
 	@NotBlank(message = "Role can not be blank")
-	private Role role;
+	private List<Role>  roles;
 	private String photo;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.role.toString());
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(this.roles.toString());
 		Set<GrantedAuthority> auths = new HashSet<>();
 		auths.add(authority);
 		return auths;

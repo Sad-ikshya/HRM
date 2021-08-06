@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 							.designation(user.getDesignation())
 							.bio(user.getBio())
 							.joinedDate(user.getJoinedDate())
-							.role(user.getRole())
+							.roles(user.getRoles())
 							.photo(user.getPhoto())
 							.build();
 			
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 		}
 		UserPaginationData paginationData = UserPaginationData.builder()
 										.currentPage(pagedUser.getNumber())
-										.totalPage(pagedUser.getSize())
+										.totalPage(pagedUser.getTotalPages())
 										.usersData(userDtoList)
 										.build();
 		return paginationData;
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 										.designation(user.getDesignation())
 										.bio(user.getBio())
 										.joinedDate(user.getJoinedDate())
-										.role(user.getRole())
+										.roles(user.getRoles())
 										.photo(user.getPhoto())
 										.build();
 		return userDto;
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
 										.designation(user.getDesignation())
 										.bio(user.getBio())
 										.joinedDate(user.getJoinedDate())
-										.role(user.getRole())
+										.roles(user.getRoles())
 										.photo(user.getPhoto())
 										.build();
 		return userDto;
@@ -130,7 +130,8 @@ public class UserServiceImpl implements UserService {
 					.designation(user.getDesignation()==null || adminID == null?
 							userEntity.getDesignation():user.getDesignation())
 					.bio(user.getBio()==null?userEntity.getBio():user.getBio())
-					.role(adminID == null?userEntity.getRole():user.getRole())
+					.roles(user.getRoles()==null || adminID == null?
+							userEntity.getRoles():user.getRoles())
 					.photo(user.getPhoto()==null?userEntity.getPhoto():user.getPhoto())
 					.joinedDate(userEntity.getJoinedDate())
 					.build();
@@ -141,7 +142,7 @@ public class UserServiceImpl implements UserService {
 					.department(updatedUser.getDepartment())
 					.designation(updatedUser.getDesignation())
 					.bio(updatedUser.getBio())
-					.role(updatedUser.getRole())
+					.roles(updatedUser.getRoles())
 					.photo(updatedUser.getPhoto())
 					.joinedDate(updatedUser.getJoinedDate())
 					.build();
@@ -177,7 +178,7 @@ public class UserServiceImpl implements UserService {
 													.designation(user.getDesignation())
 													.bio(user.getBio())
 													.joinedDate(user.getJoinedDate())
-													.role(user.getRole())
+													.roles(user.getRoles())
 													.photo(user.getPhoto())
 													.build();
 		deletedUserRepo.save(deletedUserEntity);

@@ -1,5 +1,7 @@
 package com.finalproject.HRM.web.user.entities;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,7 +29,7 @@ public class DeletedUser {
 	private String designation;
 	private String bio;
 	private Long joinedDate;
-	private Role role;
+	private List<Role>  roles;
 	private String photo;
 	
 
