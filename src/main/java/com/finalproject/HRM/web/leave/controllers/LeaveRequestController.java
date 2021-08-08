@@ -22,7 +22,7 @@ public class LeaveRequestController {
 	@Autowired
 	private LeaveRequestService leaveRequestService;
 
-	@GetMapping("/")
+	@GetMapping
 	public Page<LeaveRequestResponse> employeeGetAllLeaveRequest(@RequestParam(defaultValue = "0") int index,
 			@RequestParam(defaultValue = "10") int size) {
 		return leaveRequestService.employeeGetAllLeaveRequests(index, size);
