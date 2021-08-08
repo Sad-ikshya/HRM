@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceDto;
+import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceResponse;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveSummaryDto;
 import com.finalproject.HRM.web.leave.services.LeaveService;
 
@@ -29,6 +30,11 @@ public class EmployeeLeaveBalanceAndSummaryController {
 	@GetMapping("/leave-balances")
 	public List<LeaveBalanceDto> getLeaveBalance(@PathVariable String userid) {
 		return leaveService.getLeaveBalance(userid);
+	}
+	
+	@GetMapping("/total-balance")
+	public LeaveBalanceResponse getTotalLeaveBalance(@PathVariable String userid) {
+		return leaveService.getTotalLeaveBalance(userid);
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceDto;
+import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceResponse;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveSummaryDto;
 
 public interface LeaveService {
@@ -24,5 +25,6 @@ public interface LeaveService {
 	public Page<LeaveSummaryDto> getPagedLeaveSummary(String employeeId, int index, int size);
 
 	public List<LeaveBalanceDto> getLeaveBalance(String employeeId);
-
+	
+	public LeaveBalanceResponse getTotalLeaveBalance(String employeeId);
 }

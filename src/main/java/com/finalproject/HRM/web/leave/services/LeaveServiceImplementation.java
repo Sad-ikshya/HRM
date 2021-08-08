@@ -14,6 +14,7 @@ import com.finalproject.HRM.web.leave.dtos.LeaveDto;
 import com.finalproject.HRM.web.leave.entities.Leave;
 import com.finalproject.HRM.web.leave.repositories.LeaveRepository;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceDto;
+import com.finalproject.HRM.web.leave.responseDtos.LeaveBalanceResponse;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveSummaryDto;
 import com.finalproject.HRM.web.user.dtos.UserDto;
@@ -135,4 +136,17 @@ public class LeaveServiceImplementation implements LeaveService {
 		return leaveBalanceList;
 	}
 
+	@Override
+	public LeaveBalanceResponse getTotalLeaveBalance(String employeeId) {
+		List<LeaveSummaryDto> leaveBalances= getLeaveSummary(employeeId);
+		
+		LeaveBalanceResponse leaveBalance= LeaveBalanceResponse.builder().used(0).total(0).remaining(0).build();
+		for(LeaveSummaryDto l:leaveBalances) {
+			leaveBalance.setRemaining(leaveBalance.getRemaining()+l.getBalance());
+			leaveBalance.setTotal(leaveBalance.getTotal()+l.getTotal());
+			leaveBalance.setUsed(leaveBalance.getUsed()+l.getUse());
+		}
+		
+		return leaveBalance;
+	}
 }

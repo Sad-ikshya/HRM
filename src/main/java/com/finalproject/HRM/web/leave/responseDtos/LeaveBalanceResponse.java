@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Builder
 @Getter
 @Setter
-public class LeaveSummaryDto {
-	private String leaveName;
-	private Integer total;
-	private float use;
-	private float balance;
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class LeaveBalanceResponse {
+	float total;
+	float remaining;
+	float used;
 }

@@ -54,9 +54,9 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 				// LeaveDto leave =
 				// LeaveDto.builder().id(l.getLeaveId()).leaveName(leaveEntity.get().getLeaveName()).build();
 
-				LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
-				UserDto userDto = userService.getUserById(l.getEmployeeId());
-				int days=(int)(l.getToDate()-l.getFromDate())/86400000;
+				 LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
+				 UserDto userDto = userService.getUserById(l.getEmployeeId());
+				 int days=(int)(l.getToDate()-l.getFromDate())/86400;
 				LeaveRequestResponse leaveRequest = LeaveRequestResponse.builder().id(l.getId())
 						.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).leave(leaveDto)
 						.leaveType(l.getLeaveType()).status(l.getStatus()).days(days+1).employee(userDto).build();
@@ -79,18 +79,13 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 			Pageable page = PageRequest.of(index, size);
 			Page<LeaveRequest> leaveRequests = leaveRequestRepository.findAll(page);
 			List<LeaveRequestResponse> leaveRequestDtoList = new ArrayList<>();
-
-			for (LeaveRequest l : leaveRequests) {
-				// Optional<Leave> leaveEntity = leaveRepository.findById(l.getLeaveId());
-				// LeaveDto leave =
-				// LeaveDto.builder().id(l.getLeaveId()).leaveName(leaveEntity.get().getLeaveName()).build();
-
+			for (LeaveRequest l : leaveRequests.getContent()) {
 				LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
 				UserDto userDto = userService.getUserById(l.getEmployeeId());
-				int days=(int)(l.getToDate()-l.getFromDate())/86400000;
-				LeaveRequestResponse leaveRequest = LeaveRequestResponse.builder().id(l.getId())
-						.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).leave(leaveDto)
-						.leaveType(l.getLeaveType()).status(l.getStatus()).days(days+1).verifiedBy(l.getVerfiedBy()).employee(userDto).build();
+				int days=(int)(l.getToDate()-l.getFromDate())/86400;
+				LeaveRequestResponse leaveRequest = LeaveRequestResponse.builder().id(l.getId()).leave(leaveDto)
+						.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).employee(userDto)
+						.leaveType(l.getLeaveType()).status(l.getStatus()).days(days+1).verifiedBy(l.getVerfiedBy()).build();
 
 				leaveRequestDtoList.add(leaveRequest);
 
