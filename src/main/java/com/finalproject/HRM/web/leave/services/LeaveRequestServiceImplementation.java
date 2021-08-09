@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
 import com.finalproject.HRM.web.leave.entities.Leave;
 import com.finalproject.HRM.web.leave.entities.LeaveRequest;
+import com.finalproject.HRM.web.leave.entities.Status;
 import com.finalproject.HRM.web.leave.repositories.LeaveRepository;
 import com.finalproject.HRM.web.leave.repositories.LeaveRequestRepository;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
@@ -107,15 +108,14 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 		LeaveRequest leaveRequestEntity = LeaveRequest.builder().id(leaveRequest.getId())
 				.fromDate(leaveRequest.getFromDate()).toDate(leaveRequest.getToDate())
 				.leaveReason(leaveRequest.getLeaveReason()).leaveId(leaveRequest.getLeaveId())
-				.leaveType(leaveRequest.getLeaveType()).status(leaveRequest.getStatus())
+				.leaveType(leaveRequest.getLeaveType()).status(Status.PENDING)
 				.employeeId(leaveRequest.getEmployeeId()).build();
-
+		
 		leaveRequestEntity = leaveRequestRepository.save(leaveRequestEntity);
 		leaveRequest.setId(leaveRequestEntity.getId());
-
-		return LeaveRequestResponse.builder().id(leaveRequest.getId()).fromDate(leaveRequest.getFromDate())
-				.toDate(leaveRequest.getToDate()).leaveReason(leaveRequest.getLeaveReason()).leave(leaveDto)
-				.leaveType(leaveRequest.getLeaveType()).status(leaveRequest.getStatus()).employee(user).build();
+		return LeaveRequestResponse.builder().id(leaveRequestEntity.getId()).fromDate(leaveRequestEntity.getFromDate())
+				.toDate(leaveRequestEntity.getToDate()).leaveReason(leaveRequestEntity.getLeaveReason()).leave(leaveDto)
+				.leaveType(leaveRequestEntity.getLeaveType()).status(leaveRequestEntity.getStatus()).employee(user).build();
 
 	}
 

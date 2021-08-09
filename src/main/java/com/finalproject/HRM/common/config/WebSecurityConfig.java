@@ -23,12 +23,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
 					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-				}).and().authorizeRequests()
+				});
+		/*.and().authorizeRequests()
 				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
 						"/swagger-ui.html", "/webjars/**")
 				.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated().and()
 //				.anyRequest().permitAll().and()
-				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);*/
 	}
 
 }
