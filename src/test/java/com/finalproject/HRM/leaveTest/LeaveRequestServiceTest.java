@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
+import com.finalproject.HRM.web.leave.entities.LeaveRequest;
 import com.finalproject.HRM.web.leave.entities.LeaveType;
 import com.finalproject.HRM.web.leave.entities.Status;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
@@ -72,17 +74,21 @@ public class LeaveRequestServiceTest {
 		LeaveRequestResponse addedLeaveRequest = leaveRequestService.saveLeaveRequest(leaveRequest);
 		assertThat(addedLeaveRequest).usingRecursiveComparison().isEqualTo(leaveRequestResponse);
 	}
+	
 
-//	@Test
-//	public void testLeaveDetailByDate() {
-//		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
-//
-//		leaveRequests.add(leaveRequestResponse);
-//		Pageable page = PageRequest.of(0, 10);
-//		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
-//				leaveRequests.size());
-//		when(leaveRequestService.leaveDetailByTodayDate(null, 0, 10)).thenReturn(leaveRequestDtoPage);
-//	}
+	@Test
+	public void testLeaveDetailByTodayDate() throws ParseException {
+		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
+
+		leaveRequests.add(leaveRequestResponse);
+		Pageable page = PageRequest.of(0, 10);
+		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
+				leaveRequests.size());
+		when(leaveRequestService.leaveDetailByTodayDate(0, 10)).thenReturn(leaveRequestDtoPage);
+		Page<LeaveRequestResponse> leaveRequestResponse=leaveRequestService.leaveDetailByTodayDate(0, 10);
+		assertThat(leaveRequestResponse).usingRecursiveComparison().isEqualTo(leaveRequestDtoPage);
+
+	}
 
 	@Test
 	public void testGetAllLeaveRequests() {
@@ -125,15 +131,16 @@ public class LeaveRequestServiceTest {
 
 	}
 
-	@Test
+	/*@Test
 	public void testUpadateLeaveStatus() {
 
 		LeaveRequestStatusDto leaveRequestStatus = LeaveRequestStatusDto.builder().status(Status.APPROVED).build();
-
-		//when(leaveRequestService.updateLeaveStatus("1234", leaveRequestStatus)).thenReturn(leaveRequestResponse);
-		//LeaveRequestResponse updatedLeaveRequest = leaveRequestService.updateLeaveStatus("1234", leaveRequestStatus);
-		//assertThat(leaveRequestResponse).usingRecursiveComparison().isEqualTo(updatedLeaveRequest);
-	}
+		LeaveRequestResponse leaveRequestResponse = LeaveRequestResponse.builder().id("12345").fromDate(23456736L)
+				.toDate(23456736L).leaveReason("busy in household work").leave(leave)
+				.leaveType(LeaveType.FULL).verifiedBy("23456").employee(user).build();
+		
+		
+	}*/
 
 	@Test
 	public void testDeleteLeaveRequest() {

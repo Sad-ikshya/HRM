@@ -31,7 +31,7 @@ public class LeaveServiceImplementation implements LeaveService {
 
 	@Override
 	public LeaveDto saveLeave(LeaveDto leave) {
-		Leave leaveEntity = Leave.builder().id(leave.getId()).leaveName(leave.getLeaveName()).days(leave.getDays())
+		Leave leaveEntity = Leave.builder().leaveName(leave.getLeaveName()).days(leave.getDays())
 				.build();
 
 		leaveEntity = leaveRepository.save(leaveEntity);
@@ -77,7 +77,7 @@ public class LeaveServiceImplementation implements LeaveService {
 		Pageable page = PageRequest.of(index, size);
 		UserDto user = userService.getUserById(employeeId);
 		if (user.getId() != "") {
-			Page<LeaveRequestResponse> leaveRequestsDto = leaveRequestService. pagedLeaveDetailByEmployeeId(employeeId, index, size);
+			Page<LeaveRequestResponse> leaveRequestsDto = leaveRequestService.pagedLeaveDetailByEmployeeId(employeeId, index, size);
 			List<LeaveSummaryDto> leaveSummaries = new ArrayList<LeaveSummaryDto>();
 			List<LeaveDto> leaveList = getAllLeaves();
 

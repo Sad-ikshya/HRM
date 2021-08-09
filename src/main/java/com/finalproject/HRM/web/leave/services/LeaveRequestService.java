@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.finalproject.HRM.web.leave.entities.LeaveRequest;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
 import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestStatusDto;
 import com.finalproject.HRM.web.leave.responseDtos.LeaveRequestResponse;

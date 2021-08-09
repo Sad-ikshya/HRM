@@ -105,7 +105,7 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 	public LeaveRequestResponse saveLeaveRequest(LeaveRequestDto leaveRequest) {
 		UserDto user = userService.getUserById(leaveRequest.getEmployeeId());
 		LeaveDto leaveDto = leaveService.getLeaveById(leaveRequest.getLeaveId());
-		LeaveRequest leaveRequestEntity = LeaveRequest.builder().id(leaveRequest.getId())
+		LeaveRequest leaveRequestEntity = LeaveRequest.builder()
 				.fromDate(leaveRequest.getFromDate()).toDate(leaveRequest.getToDate())
 				.leaveReason(leaveRequest.getLeaveReason()).leaveId(leaveRequest.getLeaveId())
 				.leaveType(leaveRequest.getLeaveType()).status(Status.PENDING)
@@ -191,12 +191,13 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 			LeaveRequestResponse leaveRequestResponse = LeaveRequestResponse.builder().id(l.getId())
 					.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).leave(leave)
 					.leaveType(l.getLeaveType()).status(l.getStatus()).employee(employee).build();
-
+			
 			leaveRequests.add(leaveRequestResponse);
 		}
 		return leaveRequests;
 	}
 
+	
 	public  List<LeaveRequest> filterDate() throws java.text.ParseException
 	{	
 		DateFormat formatter = new SimpleDateFormat("yyy/MM/dd");
