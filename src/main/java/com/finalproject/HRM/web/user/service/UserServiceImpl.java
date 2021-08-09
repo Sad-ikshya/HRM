@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
 							.joinedDate(user.getJoinedDate())
 							.roles(user.getRoles())
 							.photo(user.getPhoto())
-							.build();
+							.contact(user.getContact())						.build();
 			
 			userDtoList.add(userDto);
 		}
@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService {
 										.joinedDate(user.getJoinedDate())
 										.roles(user.getRoles())
 										.photo(user.getPhoto())
+										.contact(user.getContact())
 										.build();
 		return userDto;
 	}
@@ -112,6 +113,7 @@ public class UserServiceImpl implements UserService {
 										.joinedDate(user.getJoinedDate())
 										.roles(user.getRoles())
 										.photo(user.getPhoto())
+										.contact(user.getContact())
 										.build();
 		return userDto;
 	}
@@ -134,6 +136,7 @@ public class UserServiceImpl implements UserService {
 							userEntity.getRoles():user.getRoles())
 					.photo(user.getPhoto()==null?userEntity.getPhoto():user.getPhoto())
 					.joinedDate(userEntity.getJoinedDate())
+					.contact(user.getContact()==null?userEntity.getContact():user.getContact())
 					.build();
 		userRepository.save(updatedUser);
 		return UserDto.builder()
@@ -145,6 +148,7 @@ public class UserServiceImpl implements UserService {
 					.roles(updatedUser.getRoles())
 					.photo(updatedUser.getPhoto())
 					.joinedDate(updatedUser.getJoinedDate())
+					.contact(updatedUser.getContact())
 					.build();
 	}
 	
@@ -180,6 +184,7 @@ public class UserServiceImpl implements UserService {
 													.joinedDate(user.getJoinedDate())
 													.roles(user.getRoles())
 													.photo(user.getPhoto())
+													.contact(user.getContact())
 													.build();
 		deletedUserRepo.save(deletedUserEntity);
 		userRepository.deleteById(id);

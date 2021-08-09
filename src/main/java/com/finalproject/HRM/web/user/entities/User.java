@@ -49,6 +49,7 @@ public class User implements UserDetails{
 	@NotBlank(message = "Role can not be blank")
 	private List<Role>  roles;
 	private String photo;
+	private Long contact;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
