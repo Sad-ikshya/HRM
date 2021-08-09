@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.service.UserService;
@@ -30,7 +31,12 @@ public class UserController {
 	@PostMapping("/{id}/image")
 	public String uploadImage(@PathVariable String id,@RequestParam("image") MultipartFile image) throws Exception
 	{
-		return userService.uploadImage(image);
+//		return userService.uploadImage(image);
+		return ServletUriComponentsBuilder
+				.fromCurrentContextPath()
+				.path("/image/upload/")
+				.path(userService.uploadImage(image))
+				.toUriString();
 	}
 	
 	@GetMapping("/{id}")
