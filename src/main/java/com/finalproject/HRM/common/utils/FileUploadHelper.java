@@ -19,16 +19,22 @@ public class FileUploadHelper {
 //	@Value("${image.uploadPath}")
 //	private String LOCATION;
 	
-	private String LOCATION = new ClassPathResource("static/image/upload/").getFile().getAbsolutePath();
+	private String LOCATION = null;
 	
 	public FileUploadHelper() throws IOException
 	{
-		
+		/*
+		 * code to create new folder if folder doesn't already exist
+		 */
+		LOCATION = new ClassPathResource("static/image/upload/").getFile().getAbsolutePath();
 	}
 	
 	public String upload(MultipartFile file) throws Exception
 	{
-		String path = LOCATION+file.getOriginalFilename();
+		/*
+		 * replace image original name with something unique
+		 */
+		String path = LOCATION+"/"+file.getOriginalFilename(); 
 //		String path = LOCATION.concat(file.getOriginalFilename());
 		try(InputStream inputStream = file.getInputStream())
 		{
@@ -39,6 +45,7 @@ public class FileUploadHelper {
 			throw new Exception("fail to upload file "+e);
 		}
 //		return path;
+		System.out.println("File stored inside: " + LOCATION);
 		return file.getOriginalFilename();
 	}
 }

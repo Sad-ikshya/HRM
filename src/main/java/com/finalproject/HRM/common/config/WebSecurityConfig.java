@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
 						"/swagger-ui.html", "/webjars/**")
 				.permitAll()
+				.antMatchers("/image/**").permitAll() //image path
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated().and()
 //				.anyRequest().permitAll().and()
