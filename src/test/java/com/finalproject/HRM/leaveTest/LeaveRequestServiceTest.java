@@ -52,17 +52,13 @@ public class LeaveRequestServiceTest {
 	@BeforeAll
 	static void setup() {
 		leaveRequestService = mock(LeaveRequestService.class);
-		leaveService = mock(LeaveService.class);
-		userService = mock(UserService.class);
-		leave = leaveService.getLeaveById("1234");
-		user = userService.getUserById("1234");
 
 	}
 
 	@Test
 	public void testAddLeaveRequest() {
 
-		leaveRequest = LeaveRequestDto.builder().id("12345").fromDate(23456736L)
+		leaveRequest = LeaveRequestDto.builder().fromDate(23456736L)
 				.toDate(23456736L).leaveReason("busy in household work").leaveId("1234")
 				.leaveType(LeaveType.FULL).status(Status.PENDING).employeeId("1234").build();
 
@@ -105,6 +101,19 @@ public class LeaveRequestServiceTest {
 				leaveRequests.size());
 		when(leaveRequestService.getAllLeaveRequests(0, 10)).thenReturn(leaveRequestDtoPage);
 
+	}
+	@Test 
+	public void testEmployeeGetAllLeaveRequests() {
+		LeaveRequestResponse leaveRequestResponse = LeaveRequestResponse.builder().id("12345").fromDate(23456736L)
+				.toDate(23456736L).leaveReason("busy in household work").leave(leave)
+				.leaveType(LeaveType.FULL).verifiedBy("23456").employee(user).build();
+		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
+		leaveRequests.add(leaveRequestResponse);
+		Pageable page = PageRequest.of(0, 10);
+		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
+				leaveRequests.size());
+		when(leaveRequestService.getAllLeaveRequests(0, 10)).thenReturn(leaveRequestDtoPage);
+		
 	}
 
 	@Test

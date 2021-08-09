@@ -36,7 +36,7 @@ public class LeaveServiceTest {
 	
 	@Test
 	public void testSaveLeave() {
-		leave=LeaveDto.builder().id("1234").leaveName("sick").days(15).build();
+		leave=LeaveDto.builder().leaveName("sick").days(15).build();
 		
 		when(leaveService.saveLeave(leave)).thenReturn(leave);
 		LeaveDto addedLeave=leaveService.saveLeave(leave);
