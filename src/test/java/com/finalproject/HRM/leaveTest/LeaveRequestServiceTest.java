@@ -131,7 +131,7 @@ public class LeaveRequestServiceTest {
 
 	}
 
-	/*@Test
+	@Test
 	public void testUpadateLeaveStatus() {
 
 		LeaveRequestStatusDto leaveRequestStatus = LeaveRequestStatusDto.builder().status(Status.APPROVED).build();
@@ -140,7 +140,11 @@ public class LeaveRequestServiceTest {
 				.leaveType(LeaveType.FULL).verifiedBy("23456").employee(user).build();
 		
 		
-	}*/
+		when(leaveRequestService.updateLeaveStatus("1234", leaveRequestStatus, "23456")).thenReturn(leaveRequestResponse);
+		LeaveRequestResponse leaveRequestResponseDto= leaveRequestService.updateLeaveStatus("1234", leaveRequestStatus, "23456");
+		assertThat(leaveRequestResponseDto).usingRecursiveComparison().isEqualTo(leaveRequestResponse);
+
+	}
 
 	@Test
 	public void testDeleteLeaveRequest() {
