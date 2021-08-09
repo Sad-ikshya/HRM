@@ -31,6 +31,6 @@ public class DeletedUser {
 	private Long joinedDate;
 	private List<Role>  roles;
 	private String photo;
-	
+	private Long contact;
 
 }
