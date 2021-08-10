@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
 		User updatedUser=User.builder()
 					.id(id)
 					.fullName(user.getFullName()==null?userEntity.getFullName():user.getFullName())
-					.email(user.getEmail()==null?userEntity.getEmail():user.getEmail())
+					.email(userEntity.getEmail())
 					.department(user.getDepartment()==null || adminID == null?
 							userEntity.getDepartment():user.getDepartment())
 					.designation(user.getDesignation()==null || adminID == null?
