@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
 					.build();
 	}
 	
-@Override
+	//@Override
 	public FileUpload uploadImage(MultipartFile image) throws Exception
 	{
 		
@@ -169,11 +169,12 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	
-		String url= ServletUriComponentsBuilder
-					.fromCurrentContextPath()
-					.path("/image/upload/")
-					.path(fileHelper.upload(image))
-					.toUriString();
+		String url = fileHelper.upload(image);
+//		String url= ServletUriComponentsBuilder
+//					.fromCurrentContextPath()
+//					.path("/image/upload/")
+//					.path(fileHelper.upload(image))
+//					.toUriString();
 		
 		FileUpload file = FileUpload.builder()
 									.url(url)
