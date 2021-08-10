@@ -154,8 +154,8 @@ public class UserServiceImpl implements UserService {
 					.build();
 	}
 	
-	//@Override
-	/*public FileUpload uploadImage(MultipartFile image) throws Exception
+@Override
+	public FileUpload uploadImage(MultipartFile image) throws Exception
 	{
 		
 		if(image.isEmpty())
@@ -181,7 +181,7 @@ public class UserServiceImpl implements UserService {
 									.extension(image.getContentType())
 									.build();
 		return file;
-	}*/
+	}
 	
 	@Override
 	public String deleteUserById(String id)
