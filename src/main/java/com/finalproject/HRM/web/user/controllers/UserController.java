@@ -32,16 +32,16 @@ public class UserController {
 		return userService.updateUser(id, user,null);
 	}
 	
-	@PostMapping("/{id}/image")
-	public FileUpload uploadImage(@PathVariable String id,@RequestParam("image") MultipartFile image) throws Exception
-	{
+//	@PostMapping("/{id}/image")
+//	public FileUpload uploadImage(@PathVariable String id,@RequestParam("image") MultipartFile image) throws Exception
+	//{
 //		String url = ServletUriComponentsBuilder
 //				.fromCurrentContextPath()
 //				.path("/image/upload/")
 //				.path(userService.uploadImage(image))
 //				.toUriString();
-		return userService.uploadImage(image);
-	}
+	//	return userService.uploadImage(image);
+	//}
 	
 	@GetMapping("/{id}")
 	public UserDto getUserById(@PathVariable String id)
