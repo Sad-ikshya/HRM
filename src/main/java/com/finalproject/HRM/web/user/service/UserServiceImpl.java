@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	//@Override
-	/*public FileUpload uploadImage(MultipartFile image) throws Exception
+	public FileUpload uploadImage(MultipartFile image) throws Exception
 	{
 		
 		if(image.isEmpty())
@@ -169,11 +169,12 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	
-		String url= ServletUriComponentsBuilder
-					.fromCurrentContextPath()
-					.path("/image/upload/")
-					.path(fileHelper.upload(image))
-					.toUriString();
+		String url = fileHelper.upload(image);
+//		String url= ServletUriComponentsBuilder
+//					.fromCurrentContextPath()
+//					.path("/image/upload/")
+//					.path(fileHelper.upload(image))
+//					.toUriString();
 		
 		FileUpload file = FileUpload.builder()
 									.url(url)
@@ -181,7 +182,7 @@ public class UserServiceImpl implements UserService {
 									.extension(image.getContentType())
 									.build();
 		return file;
-	}*/
+	}
 	
 	@Override
 	public String deleteUserById(String id)

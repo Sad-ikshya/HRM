@@ -16,8 +16,9 @@ public class FileUploadHelper {
 	
 //	private final String LOCATION = "/home/rukesh/Documents/spring/HRM/src/main/resources/static/image/upload/";
 	
-//	@Value("${image.uploadPath}")
-	private String LOCATION= null;
+	@Value("${image.uploadPath}")
+	private String LOCATION;
+//	private String LOCATION= null;
 	
 	public FileUploadHelper() throws IOException
 	{
@@ -25,7 +26,7 @@ public class FileUploadHelper {
 		/*
 		 * code to create new folder if folder doesn't already exist
 		 */
-		LOCATION = new ClassPathResource("static/image/upload/").getFile().getAbsolutePath();
+//		LOCATION = new ClassPathResource("static/image/upload/").getFile().getAbsolutePath();
 	}
 	
 	public String upload(MultipartFile file) throws Exception
