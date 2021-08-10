@@ -10,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.finalproject.HRM.common.utils.FileUploadHelper;
 import com.finalproject.HRM.web.user.dtos.UserPaginationData;
+import com.finalproject.HRM.web.user.dtos.FileUpload;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.DeletedUser;
 import com.finalproject.HRM.web.user.entities.User;
@@ -153,7 +155,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public String uploadImage(MultipartFile image) throws Exception
+	public FileUpload uploadImage(MultipartFile image) throws Exception
 	{
 		
 		if(image.isEmpty())
@@ -167,7 +169,18 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	
-		return fileHelper.upload(image);
+		String url= ServletUriComponentsBuilder
+					.fromCurrentContextPath()
+					.path("/image/upload/")
+					.path(fileHelper.upload(image))
+					.toUriString();
+		
+		FileUpload file = FileUpload.builder()
+									.url(url)
+									.fileName(image.getOriginalFilename())
+									.extension(image.getContentType())
+									.build();
+		return file;
 	}
 	
 	@Override

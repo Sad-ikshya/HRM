@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.HRM.web.user.dtos.UserPaginationData;
+import com.finalproject.HRM.web.user.dtos.FileUpload;
 import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.service.UserService;
 
@@ -47,7 +48,7 @@ public class AdminUserController {
 	}
 	
 	@PostMapping("/{id}/image")
-	public String uploadImage(
+	public FileUpload uploadImage(
 						@PathVariable String adminid,
 						@PathVariable String id,
 						@RequestParam("image") MultipartFile image
