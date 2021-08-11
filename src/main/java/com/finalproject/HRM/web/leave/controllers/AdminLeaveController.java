@@ -1,7 +1,5 @@
 package com.finalproject.HRM.web.leave.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,24 +21,22 @@ public class AdminLeaveController {
 
 	@PostMapping("/")
 
-	public LeaveDto saveLeave(@PathVariable String adminId,@RequestBody LeaveDto leave) {
+	public LeaveDto saveLeave(@PathVariable String adminId, @RequestBody LeaveDto leave) {
 		return leaveService.saveLeave(leave);
 	}
 
-	
-
 	@GetMapping("/{id}")
-	public LeaveDto getLeaveById(@PathVariable String adminId,@PathVariable String id) {
+	public LeaveDto getLeaveById(@PathVariable String adminId, @PathVariable String id) {
 		return leaveService.getLeaveById(id);
 	}
 
 	@PutMapping("/{id}")
-	public LeaveDto updateLeave(@PathVariable String adminId,@PathVariable String id, @RequestBody LeaveDto leave) {
+	public LeaveDto updateLeave(@PathVariable String adminId, @PathVariable String id, @RequestBody LeaveDto leave) {
 		return leaveService.updateLeave(id, leave);
 	}
 
 	@DeleteMapping("/{id}")
-	public String deleteLeave(@PathVariable String adminId,@PathVariable String id) {
+	public String deleteLeave(@PathVariable String adminId, @PathVariable String id) {
 		return leaveService.deleteLeave(id);
 	}
 

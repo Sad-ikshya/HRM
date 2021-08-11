@@ -17,5 +17,5 @@ public class LeaveDto {
 	private String id;
 	private String leaveName;
 	private Integer days;
-	
+
 }

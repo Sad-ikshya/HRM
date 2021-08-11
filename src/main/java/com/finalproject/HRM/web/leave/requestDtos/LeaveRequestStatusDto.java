@@ -1,8 +1,5 @@
 package com.finalproject.HRM.web.leave.requestDtos;
 
-import java.util.Date;
-
-import com.finalproject.HRM.web.leave.entities.LeaveType;
 import com.finalproject.HRM.web.leave.entities.Status;
 
 import lombok.AllArgsConstructor;

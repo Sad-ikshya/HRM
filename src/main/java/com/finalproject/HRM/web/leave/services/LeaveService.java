@@ -25,6 +25,6 @@ public interface LeaveService {
 	public Page<LeaveSummaryDto> getPagedLeaveSummary(String employeeId, int index, int size);
 
 	public List<LeaveBalanceDto> getLeaveBalance(String employeeId);
-	
+
 	public LeaveBalanceResponse getTotalLeaveBalance(String employeeId);
 }

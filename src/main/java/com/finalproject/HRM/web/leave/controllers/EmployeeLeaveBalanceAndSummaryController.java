@@ -31,7 +31,7 @@ public class EmployeeLeaveBalanceAndSummaryController {
 	public List<LeaveBalanceDto> getLeaveBalance(@PathVariable String userid) {
 		return leaveService.getLeaveBalance(userid);
 	}
-	
+
 	@GetMapping("/total-balance")
 	public LeaveBalanceResponse getTotalLeaveBalance(@PathVariable String userid) {
 		return leaveService.getTotalLeaveBalance(userid);

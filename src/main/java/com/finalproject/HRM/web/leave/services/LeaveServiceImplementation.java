@@ -2,8 +2,6 @@ package com.finalproject.HRM.web.leave.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,8 +30,7 @@ public class LeaveServiceImplementation implements LeaveService {
 
 	@Override
 	public LeaveDto saveLeave(LeaveDto leave) {
-		Leave leaveEntity = Leave.builder().leaveName(leave.getLeaveName()).days(leave.getDays())
-				.build();
+		Leave leaveEntity = Leave.builder().leaveName(leave.getLeaveName()).days(leave.getDays()).build();
 
 		leaveEntity = leaveRepository.save(leaveEntity);
 		leave.setId(leaveEntity.getId());
@@ -78,7 +75,8 @@ public class LeaveServiceImplementation implements LeaveService {
 		Pageable page = PageRequest.of(index, size);
 		UserDto user = userService.getUserById(employeeId);
 		if (user.getId() != "") {
-			Page<LeaveRequestResponse> leaveRequestsDto = leaveRequestService.pagedLeaveDetailByEmployeeId(employeeId, index, size);
+			Page<LeaveRequestResponse> leaveRequestsDto = leaveRequestService.pagedLeaveDetailByEmployeeId(employeeId,
+					index, size);
 			List<LeaveSummaryDto> leaveSummaries = new ArrayList<LeaveSummaryDto>();
 			List<LeaveDto> leaveList = getAllLeaves();
 
@@ -93,9 +91,9 @@ public class LeaveServiceImplementation implements LeaveService {
 
 				leaveSummaries.add(leaveSummary);
 			}
-		Page<LeaveSummaryDto> leaveSummaryPage = new PageImpl<LeaveSummaryDto>(leaveSummaries, page,
-				leaveSummaries.size());
-		return leaveSummaryPage;
+			Page<LeaveSummaryDto> leaveSummaryPage = new PageImpl<LeaveSummaryDto>(leaveSummaries, page,
+					leaveSummaries.size());
+			return leaveSummaryPage;
 		}
 		return null;
 	}
@@ -141,15 +139,15 @@ public class LeaveServiceImplementation implements LeaveService {
 
 	@Override
 	public LeaveBalanceResponse getTotalLeaveBalance(String employeeId) {
-		List<LeaveSummaryDto> leaveBalances= getLeaveSummary(employeeId);
-		
-		LeaveBalanceResponse leaveBalance= LeaveBalanceResponse.builder().used(0).total(0).remaining(0).build();
-		for(LeaveSummaryDto l:leaveBalances) {
-			leaveBalance.setRemaining(leaveBalance.getRemaining()+l.getBalance());
-			leaveBalance.setTotal(leaveBalance.getTotal()+l.getTotal());
-			leaveBalance.setUsed(leaveBalance.getUsed()+l.getUse());
+		List<LeaveSummaryDto> leaveBalances = getLeaveSummary(employeeId);
+
+		LeaveBalanceResponse leaveBalance = LeaveBalanceResponse.builder().used(0).total(0).remaining(0).build();
+		for (LeaveSummaryDto l : leaveBalances) {
+			leaveBalance.setRemaining(leaveBalance.getRemaining() + l.getBalance());
+			leaveBalance.setTotal(leaveBalance.getTotal() + l.getTotal());
+			leaveBalance.setUsed(leaveBalance.getUsed() + l.getUse());
 		}
-		
+
 		return leaveBalance;
 	}
 }

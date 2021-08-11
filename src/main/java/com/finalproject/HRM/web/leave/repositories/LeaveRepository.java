@@ -4,6 +4,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.finalproject.HRM.web.leave.entities.Leave;
 
-public interface LeaveRepository extends MongoRepository<Leave, String>{
+public interface LeaveRepository extends MongoRepository<Leave, String> {
 
 }

@@ -1,15 +1,10 @@
 package com.finalproject.HRM.web.leave.entities;
 
-import java.math.BigInteger;
-import java.util.Date;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.finalproject.HRM.web.user.entities.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

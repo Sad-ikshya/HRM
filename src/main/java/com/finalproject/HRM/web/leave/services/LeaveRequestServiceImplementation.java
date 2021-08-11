@@ -28,7 +28,6 @@ import com.finalproject.HRM.web.user.dtos.UserDto;
 import com.finalproject.HRM.web.user.entities.User;
 import com.finalproject.HRM.web.user.repositories.UserRepository;
 import com.finalproject.HRM.web.user.service.UserService;
-import com.nimbusds.jose.shaded.json.parser.ParseException;
 
 @Service
 public class LeaveRequestServiceImplementation implements LeaveRequestService {
@@ -51,16 +50,13 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 			List<LeaveRequestResponse> leaveRequestDtoList = new ArrayList<>();
 
 			for (LeaveRequest l : leaveRequests) {
-				// Optional<Leave> leaveEntity = leaveRepository.findById(l.getLeaveId());
-				// LeaveDto leave =
-				// LeaveDto.builder().id(l.getLeaveId()).leaveName(leaveEntity.get().getLeaveName()).build();
 
-				 LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
-				 UserDto userDto = userService.getUserById(l.getEmployeeId());
-				 int days=(int)(l.getToDate()-l.getFromDate())/86400;
+				LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
+				UserDto userDto = userService.getUserById(l.getEmployeeId());
+				int days = (int) (l.getToDate() - l.getFromDate()) / 86400;
 				LeaveRequestResponse leaveRequest = LeaveRequestResponse.builder().id(l.getId())
 						.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).leave(leaveDto)
-						.leaveType(l.getLeaveType()).status(l.getStatus()).days(days+1).employee(userDto).build();
+						.leaveType(l.getLeaveType()).status(l.getStatus()).days(days + 1).employee(userDto).build();
 
 				leaveRequestDtoList.add(leaveRequest);
 
@@ -75,7 +71,8 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 		return null;
 
 	}
-	public Page<LeaveRequestResponse> employeeGetAllLeaveRequests(int index, int size){
+
+	public Page<LeaveRequestResponse> employeeGetAllLeaveRequests(int index, int size) {
 		try {
 			Pageable page = PageRequest.of(index, size);
 			Page<LeaveRequest> leaveRequests = leaveRequestRepository.findAll(page);
@@ -83,10 +80,11 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 			for (LeaveRequest l : leaveRequests.getContent()) {
 				LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
 				UserDto userDto = userService.getUserById(l.getEmployeeId());
-				int days=(int)(l.getToDate()-l.getFromDate())/86400;
+				int days = (int) (l.getToDate() - l.getFromDate()) / 86400;
 				LeaveRequestResponse leaveRequest = LeaveRequestResponse.builder().id(l.getId()).leave(leaveDto)
-						.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).employee(userDto)
-						.leaveType(l.getLeaveType()).status(l.getStatus()).days(days+1).verifiedBy(l.getVerfiedBy()).build();
+						.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason())
+						.employee(userDto).leaveType(l.getLeaveType()).status(l.getStatus()).days(days + 1)
+						.verifiedBy(l.getVerfiedBy()).build();
 
 				leaveRequestDtoList.add(leaveRequest);
 
@@ -105,17 +103,17 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 	public LeaveRequestResponse saveLeaveRequest(LeaveRequestDto leaveRequest) {
 		UserDto user = userService.getUserById(leaveRequest.getEmployeeId());
 		LeaveDto leaveDto = leaveService.getLeaveById(leaveRequest.getLeaveId());
-		LeaveRequest leaveRequestEntity = LeaveRequest.builder()
-				.fromDate(leaveRequest.getFromDate()).toDate(leaveRequest.getToDate())
-				.leaveReason(leaveRequest.getLeaveReason()).leaveId(leaveRequest.getLeaveId())
-				.leaveType(leaveRequest.getLeaveType()).status(Status.PENDING)
+		LeaveRequest leaveRequestEntity = LeaveRequest.builder().fromDate(leaveRequest.getFromDate())
+				.toDate(leaveRequest.getToDate()).leaveReason(leaveRequest.getLeaveReason())
+				.leaveId(leaveRequest.getLeaveId()).leaveType(leaveRequest.getLeaveType()).status(Status.PENDING)
 				.employeeId(leaveRequest.getEmployeeId()).build();
-		
+
 		leaveRequestEntity = leaveRequestRepository.save(leaveRequestEntity);
 		leaveRequest.setId(leaveRequestEntity.getId());
 		return LeaveRequestResponse.builder().id(leaveRequestEntity.getId()).fromDate(leaveRequestEntity.getFromDate())
 				.toDate(leaveRequestEntity.getToDate()).leaveReason(leaveRequestEntity.getLeaveReason()).leave(leaveDto)
-				.leaveType(leaveRequestEntity.getLeaveType()).status(leaveRequestEntity.getStatus()).employee(user).build();
+				.leaveType(leaveRequestEntity.getLeaveType()).status(leaveRequestEntity.getStatus()).employee(user)
+				.build();
 
 	}
 
@@ -144,13 +142,14 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 	}
 
 	@Override
-	public Page<LeaveRequestResponse> pagedLeaveDetailByEmployeeId(String employeeId, int index, int size) throws UsernameNotFoundException {
-		Pageable page=PageRequest.of(index, size);
+	public Page<LeaveRequestResponse> pagedLeaveDetailByEmployeeId(String employeeId, int index, int size)
+			throws UsernameNotFoundException {
+		Pageable page = PageRequest.of(index, size);
 		Optional<User> userEntity = userRepository.findById(employeeId);
 		if (userEntity.isEmpty())
 			throw new UsernameNotFoundException(employeeId + " user not found");
 
-		Page<LeaveRequest> leaveRequest = leaveRequestRepository.findByEmployeeId(employeeId,page);
+		Page<LeaveRequest> leaveRequest = leaveRequestRepository.findByEmployeeId(employeeId, page);
 		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
 		for (LeaveRequest l : leaveRequest) {
 			User u = userEntity.get();
@@ -166,14 +165,15 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 
 			leaveRequests.add(leaveRequestResponse);
 		}
-		Page<LeaveRequestResponse> leaveRequestResponsePage=new PageImpl<LeaveRequestResponse>(leaveRequests, page, leaveRequests.size());
+		Page<LeaveRequestResponse> leaveRequestResponsePage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
+				leaveRequests.size());
 
 		return leaveRequestResponsePage;
 
 	}
-	
+
 	@Override
-	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId){
+	public List<LeaveRequestResponse> leaveDetailByEmployeeId(String employeeId) {
 		Optional<User> userEntity = userRepository.findById(employeeId);
 		if (userEntity.isEmpty())
 			throw new UsernameNotFoundException(employeeId + " user not found");
@@ -191,47 +191,41 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 			LeaveRequestResponse leaveRequestResponse = LeaveRequestResponse.builder().id(l.getId())
 					.fromDate(l.getFromDate()).toDate(l.getToDate()).leaveReason(l.getLeaveReason()).leave(leave)
 					.leaveType(l.getLeaveType()).status(l.getStatus()).employee(employee).build();
-			
+
 			leaveRequests.add(leaveRequestResponse);
 		}
 		return leaveRequests;
 	}
 
-	
-	public  List<LeaveRequest> filterDate() throws java.text.ParseException
-	{	
+	public List<LeaveRequest> filterDate() throws java.text.ParseException {
 		DateFormat formatter = new SimpleDateFormat("yyy/MM/dd");
 
 		Date today1 = new Date();
 
 		Date todayWithZeroTime = formatter.parse(formatter.format(today1));
 		long todayunix = todayWithZeroTime.getTime() / 1000;
-		
+
 		List<LeaveRequest> leaveRequest = leaveRequestRepository.findAll();
-		List<LeaveRequest> newlist = new ArrayList<>() ;
-		
-		for(LeaveRequest leaveReq:leaveRequest)
-		{
+		List<LeaveRequest> newlist = new ArrayList<>();
+
+		for (LeaveRequest leaveReq : leaveRequest) {
 			long from = leaveReq.getFromDate();
 			long to = leaveReq.getToDate();
-			if(from<=todayunix && to >= todayunix)
-			{
+			if (from <= todayunix && to >= todayunix) {
 				newlist.add(leaveReq);
 			}
 		}
 		System.out.println(newlist);
 		return newlist;
 	}
-	
+
 	@Override
 	public Page<LeaveRequestResponse> leaveDetailByTodayDate(int index, int size) throws java.text.ParseException {
 		Pageable page = PageRequest.of(index, size);
 		List<LeaveRequest> leaveRequest = filterDate();
 		List<LeaveRequestResponse> leaveRequests = new ArrayList<>();
 		for (LeaveRequest l : leaveRequest) {
-			
-//			if(l.getFromDate()<date &&date<l.getToDate()) {
-				
+
 			LeaveDto leaveDto = leaveService.getLeaveById(l.getLeaveId());
 			UserDto userDto = userService.getUserById(l.getEmployeeId());
 			LeaveRequestResponse leaveRequestResponse = LeaveRequestResponse.builder().id(l.getId())
@@ -239,7 +233,7 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 					.leaveType(l.getLeaveType()).status(l.getStatus()).employee(userDto).build();
 
 			leaveRequests.add(leaveRequestResponse);
-//			}
+
 		}
 		Page<LeaveRequestResponse> leaveRequestDtoPage = new PageImpl<LeaveRequestResponse>(leaveRequests, page,
 				leaveRequests.size());
@@ -248,13 +242,14 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 	}
 
 	@Override
-	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus,String adminId) {
+	public LeaveRequestResponse updateLeaveStatus(String leaveRequestId, LeaveRequestStatusDto leaveRequestStatus,
+			String adminId) {
 		LeaveRequest leaveRequestEntity = leaveRequestRepository.findById(leaveRequestId).get();
 		UserDto user = userService.getUserById(leaveRequestEntity.getEmployeeId());
-		UserDto verifiedBy= userService.getUserById(adminId);
+		UserDto verifiedBy = userService.getUserById(adminId);
 
 		LeaveDto leaveDto = leaveService.getLeaveById(leaveRequestEntity.getLeaveId());
-		
+
 		leaveRequestEntity.setStatus(leaveRequestStatus.getStatus());
 		leaveRequestEntity.setVerfiedBy(verifiedBy.getFullName());
 
@@ -262,7 +257,8 @@ public class LeaveRequestServiceImplementation implements LeaveRequestService {
 
 		return LeaveRequestResponse.builder().id(leaveRequestEntity.getId()).fromDate(leaveRequestEntity.getFromDate())
 				.toDate(leaveRequestEntity.getToDate()).leaveReason(leaveRequestEntity.getLeaveReason()).leave(leaveDto)
-				.leaveType(leaveRequestEntity.getLeaveType()).verifiedBy(verifiedBy.getFullName()).status(leaveRequestEntity.getStatus()).employee(user).build();
-	
+				.leaveType(leaveRequestEntity.getLeaveType()).verifiedBy(verifiedBy.getFullName())
+				.status(leaveRequestEntity.getStatus()).employee(user).build();
+
 	}
 }

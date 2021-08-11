@@ -1,16 +1,9 @@
 package com.finalproject.HRM.web.leave.responseDtos;
 
-import java.math.BigInteger;
-import java.util.Date;
-
 import com.finalproject.HRM.web.leave.dtos.LeaveDto;
-import com.finalproject.HRM.web.leave.entities.Leave;
 import com.finalproject.HRM.web.leave.entities.LeaveType;
 import com.finalproject.HRM.web.leave.entities.Status;
-import com.finalproject.HRM.web.leave.requestDtos.LeaveRequestDto;
 import com.finalproject.HRM.web.user.dtos.UserDto;
-import com.finalproject.HRM.web.user.entities.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
