@@ -47,15 +47,15 @@ public class AdminUserController {
 		return userService.updateUser(id, user,adminid);
 	}
 	
-//	@PostMapping("/{id}/image")
-	/*public FileUpload uploadImage(
+	@PostMapping("/{id}/image")
+	public FileUpload uploadImage(
 						@PathVariable String adminid,
 						@PathVariable String id,
 						@RequestParam("image") MultipartFile image
 						) throws Exception
 	{
 		return userService.uploadImage(image);
-	}*/
+	}
 	
 	@GetMapping("/{id}")
 	public UserDto getUserById(@PathVariable String adminid,@PathVariable String id)

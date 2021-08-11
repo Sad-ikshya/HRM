@@ -154,7 +154,7 @@ public class UserServiceImpl implements UserService {
 					.build();
 	}
 	
-	//@Override
+	@Override
 	public FileUpload uploadImage(MultipartFile image) throws Exception
 	{
 		
@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
 		
 		FileUpload file = FileUpload.builder()
 									.url(url)
-									.fileName(image.getOriginalFilename())
+									.fileName(fileHelper.upload(image))
 									.extension(image.getContentType())
 									.build();
 		return file;

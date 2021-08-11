@@ -11,7 +11,7 @@ public interface UserService {
 	public UserPaginationData getAllUser(int pageNo, int limit, String sortBy,String department, String designation);
 	public UserDto getUserByEmail(String email);
 	public UserDto updateUser(String id, UserDto user,String adminID);
-	//public FileUpload uploadImage(MultipartFile image) throws Exception;
+	public FileUpload uploadImage(MultipartFile image) throws Exception;
 	public UserDto getUserById(String id);
 	public String deleteUserById(String id);
 }
