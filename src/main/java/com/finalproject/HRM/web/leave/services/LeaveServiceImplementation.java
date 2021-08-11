@@ -2,6 +2,7 @@ package com.finalproject.HRM.web.leave.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,6 +84,7 @@ public class LeaveServiceImplementation implements LeaveService {
 
 			for (LeaveDto leave : leaveList) {
 				LeaveSummaryDto leaveSummary = new LeaveSummaryDto();
+				leaveSummary.setId(leave.getId());
 				leaveSummary.setLeaveName(leave.getLeaveName());
 				leaveSummary.setTotal(leave.getDays());
 				leaveSummary.setUse(
@@ -108,6 +110,7 @@ public class LeaveServiceImplementation implements LeaveService {
 
 			for (LeaveDto leave : leaveList) {
 				LeaveSummaryDto leaveSummary = new LeaveSummaryDto();
+				leaveSummary.setId(leave.getId());
 				leaveSummary.setLeaveName(leave.getLeaveName());
 				leaveSummary.setTotal(leave.getDays());
 				leaveSummary.setUse(

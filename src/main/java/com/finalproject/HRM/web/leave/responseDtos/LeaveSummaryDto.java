@@ -14,6 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class LeaveSummaryDto {
+	private String id;
 	private String leaveName;
 	private Integer total;
 	private float use;
